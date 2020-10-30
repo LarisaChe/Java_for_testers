@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.testng:testng:7.0.0'
+    //implementation 'org.seleniumhq.selenium:selenium-java:4.0.0-alpha-6'
+    //implementation 'org.seleniumhq.selenium:selenium-server:4.0.0-alpha-2'
+    implementation 'com.applitools:eyes-selenium-java3:3.182.0'
+}
