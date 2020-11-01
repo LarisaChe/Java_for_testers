@@ -33,7 +33,6 @@ public class GroupCreationTests {
 
   @Test
   public void testGroupCreation() throws Exception {
-
     gotoGroupPage();
     initGroupCreation();
     fillGroupForm(new GroupData("Test 1", "Test header 1", "Test footer 1"));
