@@ -9,7 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import ru.stqa.pft.addressbook.model.UserData;
 
-public class UserCreationTests {
+public class ContactCreationTests {
 
    private WebDriver wd;
 
