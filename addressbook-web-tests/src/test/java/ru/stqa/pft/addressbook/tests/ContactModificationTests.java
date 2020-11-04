@@ -10,7 +10,7 @@ import ru.stqa.pft.addressbook.model.ContactData;
  * @author lchernaya
  */
 public class ContactModificationTests extends TestBase {
-   
+
    @Test
    public void testContactModification1() {
       app.getContactHelper().initContactModification();
@@ -29,6 +29,13 @@ public class ContactModificationTests extends TestBase {
            new ContactData("Антоний", "Максимович", "Погорельский", "Black hen", "Ant", "LTD", "Москва, Нагорный проезд 9", "8495555555557", "+7910555555557",
                            "testM@mail.ru", "1", "December", "2001", "Москва, Сосновая ул. 205-3", "Модифицированный пользователь"));
       app.getContactHelper().submitContactModification();
+      app.getNavigationHelper().gotoHomePage();
+   }
+
+   @Test
+   public void testAddContactToGroup() {
+      app.getContactHelper().selectContact();
+      app.getContactHelper().addContactToGroup();
       app.getNavigationHelper().gotoHomePage();
    }
 }

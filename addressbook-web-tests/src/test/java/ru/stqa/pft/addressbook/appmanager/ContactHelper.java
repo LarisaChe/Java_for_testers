@@ -74,4 +74,8 @@ public class ContactHelper extends HelperBase {
    public void initContactModificationInView() {
       click(By.name("modifiy"));
    }
+
+   public void addContactToGroup() {
+      click(By.name("add"));
+   }
 }
