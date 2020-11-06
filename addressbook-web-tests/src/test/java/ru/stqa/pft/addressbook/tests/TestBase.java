@@ -17,7 +17,7 @@ import ru.stqa.pft.addressbook.model.ContactData;
  */
 public class TestBase  {
 
-   protected final ApplicationManager app = new ApplicationManager(BrowserType.IE);//(BrowserType.CHROME); //BrowserType.FIREFOX); //BrowserType.IE
+   protected final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);//(BrowserType.CHROME); //BrowserType.FIREFOX); //BrowserType.IE
 
    @BeforeMethod(alwaysRun = true)
    public void setUp() throws Exception {
