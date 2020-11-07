@@ -18,12 +18,12 @@ public class ContactData {
    private final String address2;
    private final String notes;
    private String group;
-   private boolean creation;
+
 
    public ContactData(String firstname, String middlename, String lastname, String title, String nickname,
                       String company, String address,
                       String homephone, String mobile, String email, String bday, String bmonth,
-                      String byear, String address2, String notes, String group, boolean creation) {
+                      String byear, String address2, String notes, String group) {
       this.firstname = firstname;
       this.middlename = middlename;
       this.lastname = lastname;
@@ -40,7 +40,6 @@ public class ContactData {
       this.address2 = address2;
       this.notes = notes;
       this.group = group;
-      this.creation = creation;
    }
 
    /**
@@ -187,12 +186,4 @@ public class ContactData {
       return group;
    }
 
-   /**
-    * Returns .
-    *
-    * @return
-    */
-   public boolean isCreation() {
-      return creation;
-   }
 }
