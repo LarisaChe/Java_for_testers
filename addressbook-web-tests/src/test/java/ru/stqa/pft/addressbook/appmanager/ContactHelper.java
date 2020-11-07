@@ -17,29 +17,31 @@ public class ContactHelper extends HelperBase {
       super(wd);
    }
 
-   public void fillContactForm(ContactData userData) {
-      type(By.name("firstname"), userData.getFirstname());
-      type(By.name("middlename"), userData.getMiddlename());
-      type(By.name("lastname"), userData.getLastname());
-      type(By.name("nickname"), userData.getNickname());
-      type(By.name("title"), userData.getTitle());
-      type(By.name("company"), userData.getCompany());
-      type(By.name("address"), userData.getAddress());
-      type(By.name("home"), userData.getHomephone());
-      type(By.name("mobile"), userData.getMobile());
-      type(By.name("email"), userData.getEmail());
+   public void fillContactForm(ContactData contactData) {
+      type(By.name("firstname"), contactData.getFirstname());
+      type(By.name("middlename"), contactData.getMiddlename());
+      type(By.name("lastname"), contactData.getLastname());
+      type(By.name("nickname"), contactData.getNickname());
+      type(By.name("title"), contactData.getTitle());
+      type(By.name("company"), contactData.getCompany());
+      type(By.name("address"), contactData.getAddress());
+      type(By.name("home"), contactData.getHomephone());
+      type(By.name("mobile"), contactData.getMobile());
+      type(By.name("email"), contactData.getEmail());
 
       click(By.name("bday"));
-      new Select(wd.findElement(By.name("bday"))).selectByVisibleText(userData.getBday());
+      new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getBday());
       click(By.xpath("//option[@value='7']"));
       click(By.name("bmonth"));
-      new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(userData.getBmonth());
+      new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getBmonth());
       click(By.xpath("//option[@value='November']"));
-      type(By.name("byear"),userData.getByear());
+      type(By.name("byear"),contactData.getByear());
       //wd.findElement(By.xpath("(//option[@value='2'])[3]")).click();
-
-      type(By.name("address2"), userData.getAddress2());
-      type(By.name("notes"), userData.getNotes());
+      if (isElementPresent(By.name("new_group"))) {
+         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      }
+      type(By.name("address2"), contactData.getAddress2());
+      type(By.name("notes"), contactData.getNotes());
    }
 
    public void initContactCreation() {

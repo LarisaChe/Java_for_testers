@@ -17,9 +17,13 @@ public class ContactData {
    private final String byear;
    private final String address2;
    private final String notes;
+   private String group;
+   private boolean creation;
 
-   public ContactData(String firstname, String middlename, String lastname, String title, String nickname, String company, String address,
-                      String homephone, String mobile, String email, String bday, String bmonth, String byear, String address2, String notes) {
+   public ContactData(String firstname, String middlename, String lastname, String title, String nickname,
+                      String company, String address,
+                      String homephone, String mobile, String email, String bday, String bmonth,
+                      String byear, String address2, String notes, String group, boolean creation) {
       this.firstname = firstname;
       this.middlename = middlename;
       this.lastname = lastname;
@@ -35,6 +39,8 @@ public class ContactData {
       this.byear = byear;
       this.address2 = address2;
       this.notes = notes;
+      this.group = group;
+      this.creation = creation;
    }
 
    /**
@@ -170,5 +176,23 @@ public class ContactData {
     */
    public String getNotes() {
       return notes;
+   }
+
+   /**
+    * Returns .
+    *
+    * @return
+    */
+   public String getGroup() {
+      return group;
+   }
+
+   /**
+    * Returns .
+    *
+    * @return
+    */
+   public boolean isCreation() {
+      return creation;
    }
 }
