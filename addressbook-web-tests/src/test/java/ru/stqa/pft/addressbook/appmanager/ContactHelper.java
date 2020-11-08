@@ -100,4 +100,9 @@ public class ContactHelper extends HelperBase {
       System.out.println("n: "+n);
       return (n>0);
    }
+
+   public String getFirstGroupName() {
+      System.out.println(wd.findElements(By.cssSelector("select[name='to_group'] option")).get(0).getText());
+      return wd.findElements(By.cssSelector("select[name='to_group'] option")).get(0).getText();
+   }
 }
