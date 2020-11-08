@@ -94,4 +94,10 @@ public class ContactHelper extends HelperBase {
    public boolean isThereAContact() {
       return isElementPresent(By.name("selected[]"));
    }
+
+   public boolean checkGroupList() {
+      int n = wd.findElements(By.cssSelector("select[name='to_group'] option")).size();
+      System.out.println("n: "+n);
+      return (n>0);
+   }
 }

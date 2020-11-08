@@ -47,7 +47,22 @@ public class ContactModificationTests extends TestBase {
    @Test
    public void testAddContactToGroup() {
       app.getNavigationHelper().gotoHomePage();
+      if (! app.getContactHelper().checkGroupList()) {
+         app.getNavigationHelper().gotoGroupPage();
+         app.getGroupHelper().createGroup(new GroupData("Test_A", "TestHeader A", "TestFooter A"));
+         app.getNavigationHelper().gotoHomePage();
+      }
+      if (! app.getContactHelper().isThereAContact()) {
+         app.getNavigationHelper().gotoGroupPage();
+         app.getGroupHelper().createGroup(new GroupData("Test_M", "TestHeader M", "TestFooter M"));
+         app.getNavigationHelper().gotoHomePage();
+         app.getContactHelper().createContact(new ContactData("Contact test m", "test m", "test m", null, null,
+                                                              null, null, null, null, null, "5", "May",
+                                                              "2000", null, null, "Test_M"), true);
+         app.getNavigationHelper().gotoHomePage();
+      }
       app.getContactHelper().selectContact();
+
       app.getContactHelper().addContactToGroup();
       app.getNavigationHelper().gotoHomePage();
    }
