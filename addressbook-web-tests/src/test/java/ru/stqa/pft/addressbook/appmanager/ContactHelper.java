@@ -83,4 +83,15 @@ public class ContactHelper extends HelperBase {
    public void addContactToGroup() {
       click(By.name("add"));
    }
+
+   public void createContact(ContactData contactData, boolean b) {
+      initContactCreation();
+      fillContactForm(contactData, b);
+      submitContactCreation();
+      //app.getNavigationHelper().gotoHomePage();
+   }
+
+   public boolean isThereAContact() {
+      return isElementPresent(By.name("selected[]"));
+   }
 }
