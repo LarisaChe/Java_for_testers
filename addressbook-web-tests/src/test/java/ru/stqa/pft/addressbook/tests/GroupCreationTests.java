@@ -1,5 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
+import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -10,11 +12,12 @@ public class GroupCreationTests extends TestBase {
   @Test
   public void testGroupCreation() throws Exception {
     app.getNavigationHelper().gotoGroupPage();
-    int before = app.getGroupHelper().getGroupCount();
+
+    List<GroupData> before = app.getGroupHelper().getGroupList();
     //app.getGroupHelper().createGroup(new GroupData("Test 1", "Test header 1", "Test footer 1"));
     app.getGroupHelper().createGroup(new GroupData("Test 1", null, null));
-    int after = app.getGroupHelper().getGroupCount();
-    Assert.assertEquals(after, before + 1);
+    List<GroupData> after = app.getGroupHelper().getGroupList();
+    Assert.assertEquals(after.size(), before.size() + 1);
     //app.logout();
   }
 
