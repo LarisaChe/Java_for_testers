@@ -1,7 +1,11 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -55,8 +59,9 @@ public class ContactHelper extends HelperBase {
       click(By.xpath("(//input[@name='submit'])[2]"));
    }
 
-   public void selectContact() {
-      click(By.name("selected[]"));
+   public void selectContact(int index) {
+      wd.findElements(By.name("selected[]")).get(index).click();
+      //click(By.name("selected[]"));
    }
 
    public void deleteSelectedContact() {
@@ -104,5 +109,26 @@ public class ContactHelper extends HelperBase {
    public String getFirstGroupName() {
       System.out.println(wd.findElements(By.cssSelector("select[name='to_group'] option")).get(0).getText());
       return wd.findElements(By.cssSelector("select[name='to_group'] option")).get(0).getText();
+   }
+
+   public List<ContactData> getContactList() {
+      List<ContactData> contacts = new ArrayList<>();
+      List<WebElement> elements  = wd.findElements(By.cssSelector("[name='entry']"));
+      for (WebElement e : elements) {
+         int id = Integer.parseInt(e.findElements(By.cssSelector("td input")).get(0).getAttribute("id"));
+         String lastName = e.findElements(By.tagName("td")).get(1).getText();
+         String firstName = e.findElements(By.tagName("td")).get(2).getText();
+         ContactData contact = new ContactData(id,  firstName, lastName, null);
+         contacts.add(contact);
+      }
+      return contacts;
+   }
+
+   public void waitMsg() {
+      int i = 0;
+      while (isElementPresent(By.className("msgbox"))) {
+         i++;
+      }
+      System.out.println("Ожидание: "+i);
    }
 }

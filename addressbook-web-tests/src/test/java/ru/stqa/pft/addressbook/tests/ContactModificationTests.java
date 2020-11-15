@@ -66,7 +66,7 @@ public class ContactModificationTests extends TestBase {
                                                               "2000", null, null, groupName), true);
          app.getNavigationHelper().gotoHomePage();
       }
-      app.getContactHelper().selectContact();
+      app.getContactHelper().selectContact(0);
       app.getContactHelper().addContactToGroup();
       app.getNavigationHelper().gotoHomePage();
    }
