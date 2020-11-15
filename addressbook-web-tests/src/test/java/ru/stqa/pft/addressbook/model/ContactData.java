@@ -64,6 +64,24 @@ public class ContactData {
       this.group = group;
    }
 
+   /**
+    * Returns .
+    *
+    * @return
+    */
+   public int getId() {
+      return id;
+   }
+
+   /**
+    * Sets .
+    *
+    * @param id
+    */
+   public void setId(int id) {
+      this.id = id;
+   }
+
    @Override
    public String toString() {
       return "ContactData{" +
