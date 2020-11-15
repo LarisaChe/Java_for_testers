@@ -16,6 +16,7 @@ public class ContactCreationTests extends TestBase {
       String groupName = "Test_С";
       app.getNavigationHelper().gotoHomePage();
       List<ContactData> before = app.getContactHelper().getContactList();
+
       if (! app.getContactHelper().checkGroupList()) {
          app.getNavigationHelper().gotoGroupPage();
          app.getGroupHelper().createGroup(new GroupData(groupName, "TestHeader С", "TestFooter С"));
