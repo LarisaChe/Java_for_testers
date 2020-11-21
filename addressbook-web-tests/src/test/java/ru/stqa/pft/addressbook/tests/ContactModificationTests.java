@@ -16,7 +16,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
  */
 public class ContactModificationTests extends TestBase {
 
-   @Test
+   @Test(enabled = false)
    public void testContactModification1() {
       String groupName = "Test_M";
       app.getNavigationHelper().gotoHomePage();

@@ -14,7 +14,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
  * @author lchernaya
  */
 public class ContactDeletionTests extends TestBase {
-   @Test
+   @Test(enabled = false)
    public void testContactDeletion() {
 
       app.getNavigationHelper().gotoHomePage();
