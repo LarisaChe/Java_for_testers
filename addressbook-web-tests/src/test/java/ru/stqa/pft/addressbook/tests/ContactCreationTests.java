@@ -14,13 +14,13 @@ public class ContactCreationTests extends TestBase {
    @Test(enabled = false)
    public void testContactCreation() throws Exception {
       String groupName = "Test_С";
-      app.getNavigationHelper().gotoHomePage();
+      app.goTo().gotoHomePage();
       List<ContactData> before = app.getContactHelper().getContactList();
 
       if (! app.getContactHelper().checkGroupList()) {
-         app.getNavigationHelper().gotoGroupPage();
-         app.getGroupHelper().createGroup(new GroupData(groupName, "TestHeader С", "TestFooter С"));
-         app.getNavigationHelper().gotoHomePage();
+         app.goTo().groupPage();
+         app.group().create(new GroupData(groupName, "TestHeader С", "TestFooter С"));
+         app.goTo().gotoHomePage();
       } else {
          groupName = app.getContactHelper().getFirstGroupName();
       }
@@ -31,7 +31,7 @@ public class ContactCreationTests extends TestBase {
                       "test@mail.ru", "7", "November", "1991", "Москва, Сосновая ул. 3-205", "Новый пользователь", groupName);
       app.getContactHelper().fillContactForm(contact, true);
            app.getContactHelper().submitContactCreation();
-      app.getNavigationHelper().gotoHomePage();
+      app.goTo().gotoHomePage();
       List<ContactData> after = app.getContactHelper().getContactList();
 
       Assert.assertEquals(after.size(), before.size() + 1);

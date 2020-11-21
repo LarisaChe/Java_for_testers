@@ -1,7 +1,6 @@
 package ru.stqa.pft.addressbook.tests;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 import org.testng.Assert;
@@ -13,13 +12,13 @@ public class GroupCreationTests extends TestBase {
 
    @Test
    public void testGroupCreation() throws Exception {
-      app.getNavigationHelper().gotoGroupPage();
+      app.goTo().groupPage();
 
-      List<GroupData> before = app.getGroupHelper().getGroupList();
+      List<GroupData> before = app.group().list();
       GroupData group = new GroupData("Test with maxId", "Test header Cr1", "Test footer Cr1");
       //app.getGroupHelper().createGroup(new GroupData("Test 1", null, null));
-      app.getGroupHelper().createGroup(group);
-      List<GroupData> after = app.getGroupHelper().getGroupList();
+      app.group().create(group);
+      List<GroupData> after = app.group().list();
       Assert.assertEquals(after.size(), before.size() + 1);
 
       //group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());

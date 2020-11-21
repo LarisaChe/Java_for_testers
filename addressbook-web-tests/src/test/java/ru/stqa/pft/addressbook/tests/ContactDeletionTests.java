@@ -17,14 +17,14 @@ public class ContactDeletionTests extends TestBase {
    @Test(enabled = false)
    public void testContactDeletion() {
 
-      app.getNavigationHelper().gotoHomePage();
+      app.goTo().gotoHomePage();
       List<ContactData> before = app.getContactHelper().getContactList();
       if (before.size() == 0) {
          String groupName = "Test_D";
          if (!app.getContactHelper().checkGroupList()) {
-            app.getNavigationHelper().gotoGroupPage();
-            app.getGroupHelper().createGroup(new GroupData(groupName, "TestHeader D", "TestFooter D"));
-            app.getNavigationHelper().gotoHomePage();
+            app.goTo().groupPage();
+            app.group().create(new GroupData(groupName, "TestHeader D", "TestFooter D"));
+            app.goTo().gotoHomePage();
          } else {
             groupName = app.getContactHelper().getFirstGroupName();
          }
@@ -33,14 +33,14 @@ public class ContactDeletionTests extends TestBase {
          app.getContactHelper().createContact(new ContactData("Contact test d", "test d", "test d", null, null,
                                                               null, null, null, null, null, "5", "May",
                                                               "2000", null, null, groupName), true);
-         app.getNavigationHelper().gotoHomePage();
+         app.goTo().gotoHomePage();
          //}
          before = app.getContactHelper().getContactList();
       }
       app.getContactHelper().selectContact(before.size()-1);
       app.getContactHelper().deleteSelectedContact();
       app.getContactHelper().waitMsg();
-      app.getNavigationHelper().gotoHomePage();
+      app.goTo().gotoHomePage();
       List<ContactData> after = app.getContactHelper().getContactList();
 
       Assert.assertEquals(after.size(), before.size()-1);
