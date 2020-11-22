@@ -23,7 +23,7 @@ public class ContactDeletionTests extends TestBase {
          String groupName = "Test_D";
          if (!app.getContactHelper().checkGroupList()) {
             app.goTo().groupPage();
-            app.group().create(new GroupData(groupName, "TestHeader D", "TestFooter D"));
+            app.group().create(new GroupData().withName(groupName).withHeader("TestHeader D").withFooter("TestFooter D"));
             app.goTo().gotoHomePage();
          } else {
             groupName = app.getContactHelper().getFirstGroupName();

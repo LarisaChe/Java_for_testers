@@ -2,6 +2,7 @@ package ru.stqa.pft.addressbook.tests;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -14,23 +15,21 @@ public class GroupCreationTests extends TestBase {
    public void testGroupCreation() throws Exception {
       app.goTo().groupPage();
 
-      List<GroupData> before = app.group().list();
-      GroupData group = new GroupData().withName("Test Cr1"); //, "Test header Cr1", "Test footer Cr1");
-      //GroupData group = new GroupData("Test with maxId", "Test header Cr1", "Test footer Cr1");
-      //app.getGroupHelper().createGroup(new GroupData("Test 1", null, null));
+      Set<GroupData> before = app.group().all();
+      GroupData group = new GroupData().withName("Test Cr1").withHeader("Test header Cr1").withFooter("Test footer Cr1");
       app.group().create(group);
-      List<GroupData> after = app.group().list();
+      Set<GroupData> after = app.group().all();
       Assert.assertEquals(after.size(), before.size() + 1);
 
-      //group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
+      //before.add(group);
+      //Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+      group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
       before.add(group);
-
-      Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-      before.sort(byId);
-      after.sort(byId);
+      //before.sort(byId);
+      //after.sort(byId);
 
       Assert.assertEquals(before, after);
-      //Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+
       //app.logout();
    }
 

@@ -19,7 +19,7 @@ public class ContactCreationTests extends TestBase {
 
       if (! app.getContactHelper().checkGroupList()) {
          app.goTo().groupPage();
-         app.group().create(new GroupData(groupName, "TestHeader С", "TestFooter С"));
+         app.group().create(new GroupData().withName(groupName).withHeader("TestHeader С").withFooter("TestFooter С"));
          app.goTo().gotoHomePage();
       } else {
          groupName = app.getContactHelper().getFirstGroupName();

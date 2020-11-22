@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
 import java.util.List;
+import java.util.Set;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -13,21 +14,20 @@ public class GroupDeletionTests extends TestBase {
    @BeforeMethod
    public void ensurePreconditions() {
       app.goTo().groupPage();
-      if (app.group().list().size() == 0) {
-        // app.group().create(new GroupData("Test D", "Test header D", "Test footer D"));
-         app.group().create(new GroupData().withName("Test D")); //, "Test header D", "Test footer D"));
+      if (app.group().all().size() == 0) {
+         app.group().create(new GroupData().withName("Test D").withHeader("Test header D").withFooter("Test footer D"));
       }
    }
 
    @Test
    public void testGroupDeletion() throws Exception {
-      List<GroupData> before = app.group().list();
-      int index = before.size() - 1;
-      app.group().delete(index);
-      List<GroupData> after = app.group().list();
-      Assert.assertEquals(after.size(), index);
+      Set<GroupData> before = app.group().all();
+      GroupData deletedGroup = before.iterator().next();
+      app.group().delete(deletedGroup);
+      Set<GroupData> after = app.group().all();
+      Assert.assertEquals(after.size(), before.size()-1);
 
-      before.remove(index);
+      before.remove(deletedGroup);
       Assert.assertEquals(before, after);
    }
 }

@@ -22,7 +22,7 @@ public class ContactModificationTests extends TestBase {
       app.goTo().gotoHomePage();
       if (! app.getContactHelper().checkGroupList()) {
          app.goTo().groupPage();
-         app.group().create(new GroupData(groupName, "TestHeader A", "TestFooter A"));
+         app.group().create(new GroupData().withName(groupName).withHeader("TestHeader A").withFooter("TestFooter A"));
          app.goTo().gotoHomePage();
       } else {
          groupName = app.getContactHelper().getFirstGroupName();
@@ -78,7 +78,7 @@ public class ContactModificationTests extends TestBase {
       app.goTo().gotoHomePage();
       if (! app.getContactHelper().checkGroupList()) {
          app.goTo().groupPage();
-         app.group().create(new GroupData(groupName, "TestHeader A", "TestFooter A"));
+         app.group().create(new GroupData().withName(groupName).withHeader("TestHeader A").withFooter("TestFooter A"));
          app.goTo().gotoHomePage();
       } else {
          groupName = app.getContactHelper().getFirstGroupName();
