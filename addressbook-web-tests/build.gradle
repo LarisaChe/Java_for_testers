@@ -7,7 +7,8 @@ apply plugin: 'java'
 dependencies {
     testImplementation(
             'org.seleniumhq.selenium:selenium-java:3.141.59',
-            'org.testng:testng:7.0.0'
+            'org.testng:testng:7.0.0',
+            'org.hamcrest:hamcrest:2.2'
     )
 }
 

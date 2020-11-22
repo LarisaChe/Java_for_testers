@@ -1,13 +1,12 @@
 package ru.stqa.pft.addressbook.tests;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 public class GroupCreationTests extends TestBase {
 
@@ -15,21 +14,13 @@ public class GroupCreationTests extends TestBase {
    public void testGroupCreation() throws Exception {
       app.goTo().groupPage();
 
-      Set<GroupData> before = app.group().all();
+      Groups before = app.group().all();
       GroupData group = new GroupData().withName("Test Cr1").withHeader("Test header Cr1").withFooter("Test footer Cr1");
       app.group().create(group);
-      Set<GroupData> after = app.group().all();
-      Assert.assertEquals(after.size(), before.size() + 1);
+      Groups after = app.group().all();
+      assertThat(after.size(), equalTo(before.size() + 1));
 
-      //before.add(group);
-      //Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-      group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
-      before.add(group);
-      //before.sort(byId);
-      //after.sort(byId);
-
-      Assert.assertEquals(before, after);
-
+      assertThat(after, equalTo(before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
       //app.logout();
    }
 
