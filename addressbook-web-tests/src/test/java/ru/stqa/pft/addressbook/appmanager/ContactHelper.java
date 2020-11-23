@@ -71,12 +71,6 @@ public class ContactHelper extends HelperBase {
       wd.switchTo().alert().accept();
    }
 
-   public void delete(ContactData contact) {
-      selectContact(contact.getId());
-      deleteSelectedContact();
-      waitMsg();
-   }
-
    public void initContactModification(int id) {
       wd.findElement(By.cssSelector("[href='edit.php?id="+id+"']")).click();
    }
@@ -85,15 +79,16 @@ public class ContactHelper extends HelperBase {
       click(By.name("update"));
    }
 
-   public void viewContactDetails() {
-      click(By.xpath("//img[@alt='Details']"));
+   public void view(int id) {
+      //click(By.xpath("//img[@alt='Details']"));
+      wd.findElement(By.cssSelector("[href='view.php?id="+id+"']")).click();
    }
 
-   public void initContactModificationInView() {
+   public void initModificationInView() {
       click(By.name("modifiy"));
    }
 
-   public void addContactToGroup() {
+   public void addToFirstGroupInList() {
       click(By.name("add"));
    }
 
@@ -111,9 +106,18 @@ public class ContactHelper extends HelperBase {
       submitContactModification();
    }
 
-   public boolean isThereAContact() {
-      return isElementPresent(By.name("selected[]"));
+   public void modifyOnViewPage(ContactData contact) {
+      initModificationInView();
+      fillContactForm(contact, false);
+      submitContactModification();
    }
+
+   public void delete(ContactData contact) {
+      selectContact(contact.getId());
+      deleteSelectedContact();
+      waitMsg();
+   }
+
 
    public boolean isGroupListEmpty() {
       int n = wd.findElements(By.cssSelector("select[name='to_group'] option")).size();
@@ -126,19 +130,6 @@ public class ContactHelper extends HelperBase {
       return wd.findElements(By.cssSelector("select[name='to_group'] option")).get(0).getText();
    }
 
-   public List<ContactData> getContactList() {
-      List<ContactData> contacts = new ArrayList<>();
-      List<WebElement> elements  = wd.findElements(By.cssSelector("[name='entry']"));
-      for (WebElement e : elements) {
-         int id = Integer.parseInt(e.findElements(By.cssSelector("td input")).get(0).getAttribute("id"));
-         String lastName = e.findElements(By.tagName("td")).get(1).getText();
-         String firstName = e.findElements(By.tagName("td")).get(2).getText();
-         ContactData contact = new ContactData().withId(id).withFirstname(firstName).withLastname(lastName);
-         contacts.add(contact);
-      }
-      return contacts;
-   }
-
    public Contacts all() {
       Contacts contacts = new Contacts();
       //System.out.println("all ");
@@ -148,8 +139,6 @@ public class ContactHelper extends HelperBase {
         // System.out.println("id: "+id);
          String lastName = e.findElements(By.tagName("td")).get(1).getText();
          String firstName = e.findElements(By.tagName("td")).get(2).getText();
-         //ContactData contact = new ContactData(id,  firstName, lastName, null);
-         //contacts.add(contact);
          contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
       }
       return contacts;
