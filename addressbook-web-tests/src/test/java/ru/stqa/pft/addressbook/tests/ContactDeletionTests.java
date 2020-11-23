@@ -1,11 +1,13 @@
 package ru.stqa.pft.addressbook.tests;
 
-import java.util.List;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 /**
@@ -14,13 +16,12 @@ import ru.stqa.pft.addressbook.model.GroupData;
  * @author lchernaya
  */
 public class ContactDeletionTests extends TestBase {
-   @Test(enabled = false)
-   public void testContactDeletion() {
 
+   @BeforeMethod
+   public void ensurePreconditions() {
       app.goTo().gotoHomePage();
-      List<ContactData> before = app.contact().getContactList();
-      if (before.size() == 0) {
-         String groupName = "Test_D";
+      String groupName = "Test_D";
+      if (app.contact().all().size() == 0) {
          if (app.contact().isGroupListEmpty()) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName(groupName).withHeader("TestHeader D").withFooter("TestFooter D"));
@@ -28,23 +29,20 @@ public class ContactDeletionTests extends TestBase {
          } else {
             groupName = app.contact().groupNameFirstInList();
          }
-
-         //if (! app.getContactHelper().isThereAContact()) {
          app.contact().create(new ContactData().withFirstname("Contact test d").withMiddlename("test d").withLastname("test d")
-                              .withBday("5").withBmonth("May").withByear("2000").withGroup(groupName), true);
-         app.goTo().gotoHomePage();
-         //}
-         before = app.contact().getContactList();
+                                               .withBday("5").withBmonth("May").withByear("2000").withGroup(groupName), true);
       }
-      app.contact().selectContact(before.size() - 1);
-      app.contact().deleteSelectedContact();
-      app.contact().waitMsg();
+   }
+
+   @Test
+   public void testContactDeletion() {
       app.goTo().gotoHomePage();
-      List<ContactData> after = app.contact().getContactList();
-
-      Assert.assertEquals(after.size(), before.size()-1);
-
-      before.remove(before.size() - 1);
-      Assert.assertEquals(before, after);
+      Contacts before = app.contact().all();
+      ContactData deletedContact = before.iterator().next();
+      app.contact() .delete(deletedContact);
+      app.goTo().gotoHomePage();
+      Contacts after = app.contact().all();
+      //assertEquals(after.size(), before.size()-1);
+      assertThat(after, equalTo(before.without(deletedContact)));
    }
 }

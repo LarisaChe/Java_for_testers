@@ -12,7 +12,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
 
 public class ContactCreationTests extends TestBase {
 
-   @Test
+   @Test(enabled = false)
    public void testContactCreation() throws Exception {
       String groupName = "Test_С";
 

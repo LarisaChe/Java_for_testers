@@ -60,14 +60,21 @@ public class ContactHelper extends HelperBase {
       click(By.xpath("(//input[@name='submit'])[2]"));
    }
 
-   public void selectContact(int index) {
-      wd.findElements(By.name("selected[]")).get(index).click();
+   public void selectContact(int id) {
+     // wd.findElements(By.name("selected[]")).get(id).click();
+      wd.findElement(By.cssSelector("input[value='"+id+"']")).click();
       //click(By.name("selected[]"));
    }
 
    public void deleteSelectedContact() {
      click(By.xpath("//input[@value='Delete']"));
       wd.switchTo().alert().accept();
+   }
+
+   public void delete(ContactData contact) {
+      selectContact(contact.getId());
+      deleteSelectedContact();
+      waitMsg();
    }
 
    public void initContactModification(int index) {
@@ -129,10 +136,11 @@ public class ContactHelper extends HelperBase {
 
    public Contacts all() {
       Contacts contacts = new Contacts();
+      //System.out.println("all ");
       List<WebElement> elements  = wd.findElements(By.cssSelector("[name='entry']"));
       for (WebElement e : elements) {
          int id = Integer.parseInt(e.findElements(By.cssSelector("td input")).get(0).getAttribute("id"));
-         System.out.println("id: "+id);
+        // System.out.println("id: "+id);
          String lastName = e.findElements(By.tagName("td")).get(1).getText();
          String firstName = e.findElements(By.tagName("td")).get(2).getText();
          //ContactData contact = new ContactData(id,  firstName, lastName, null);
