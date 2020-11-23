@@ -2,6 +2,7 @@ package ru.stqa.pft.addressbook.tests;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
+import static org.testng.Assert.assertEquals;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -34,7 +35,7 @@ public class ContactDeletionTests extends TestBase {
       }
    }
 
-   @Test
+   @Test(enabled = false)
    public void testContactDeletion() {
       app.goTo().gotoHomePage();
       Contacts before = app.contact().all();
@@ -42,7 +43,7 @@ public class ContactDeletionTests extends TestBase {
       app.contact() .delete(deletedContact);
       app.goTo().gotoHomePage();
       Contacts after = app.contact().all();
-      //assertEquals(after.size(), before.size()-1);
+      assertEquals(after.size(), before.size()-1);
       assertThat(after, equalTo(before.without(deletedContact)));
    }
 }

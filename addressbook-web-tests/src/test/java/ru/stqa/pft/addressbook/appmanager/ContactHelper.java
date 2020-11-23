@@ -77,9 +77,8 @@ public class ContactHelper extends HelperBase {
       waitMsg();
    }
 
-   public void initContactModification(int index) {
-      //click(By.xpath("//img[@alt='Edit']"));
-      wd.findElements(By.cssSelector("[title='Edit']")).get(index).click();
+   public void initContactModification(int id) {
+      wd.findElement(By.cssSelector("[href='edit.php?id="+id+"']")).click();
    }
 
    public void submitContactModification() {
@@ -104,6 +103,12 @@ public class ContactHelper extends HelperBase {
       submitContactCreation();
       waitMsg();
       //app.getNavigationHelper().gotoHomePage();
+   }
+
+   public void modify(int id, ContactData contact) {
+      initContactModification(id);
+      fillContactForm(contact, false);
+      submitContactModification();
    }
 
    public boolean isThereAContact() {
