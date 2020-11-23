@@ -3,10 +3,13 @@ package ru.stqa.pft.addressbook.tests;
 import java.util.Comparator;
 import java.util.List;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 /**
@@ -20,55 +23,86 @@ public class ContactModificationTests extends TestBase {
    public void testContactModification1() {
       String groupName = "Test_M";
       app.goTo().gotoHomePage();
-      if (! app.getContactHelper().checkGroupList()) {
+      if (app.contact().isGroupListEmpty()) {
          app.goTo().groupPage();
          app.group().create(new GroupData().withName(groupName).withHeader("TestHeader A").withFooter("TestFooter A"));
          app.goTo().gotoHomePage();
       } else {
-         groupName = app.getContactHelper().getFirstGroupName();
+         groupName = app.contact().groupNameFirstInList();
       }
-      if (! app.getContactHelper().isThereAContact()) {
-         app.getContactHelper().createContact(new ContactData("Contact test m", "test m", "test m", null, null,
-                                                              null, null, null, null, null, "5", "May",
-                                                              "2000", null, null, groupName), true);
+      if (! app.contact().isThereAContact()) {
+         app.contact().create(new ContactData().withFirstname("Contact test m").withMiddlename("test m").withLastname("test m").withGroup(groupName), true);
          app.goTo().gotoHomePage();
       }
-      List<ContactData> before = app.getContactHelper().getContactList();
+      Contacts before = app.contact().all();
 
-      app.getContactHelper().initContactModification(before.size() - 1);
+      app.contact().initContactModification(before.size() - 1);
       String lastName = "Погорельский";
       String firstName = "Антоний";
       String address = "Москва, Нагорный проезд 9";
-      app.getContactHelper().fillContactForm(
-           new ContactData(firstName, "Алексеевич", lastName, "Black hen", "Ant", "LTD", address, "8495555555557", "+7910555555557",
-                           "testM@mail.ru", "1", "December", "2001", "Москва, Сосновая ул. 205-3", "Модифицированный пользователь", null), false);
-      app.getContactHelper().submitContactModification();
+
+      ContactData contact = new ContactData()
+           .withFirstname(firstName) //"Антоний")
+           .withMiddlename("Максимович")
+           .withLastname(lastName) //"Погорельский")
+           .withTitle("Black hen")
+           .withNickname("Ant")
+           .withCompany("LTD")
+           .withAddress(address)//"Москва, Нагорный проезд 9")
+           .withHomephone("8499555555557")
+           .withMobile("+7910555555558")
+           .withEmail("mtest@mail.ru")
+           .withBday("1")
+           .withBmonth("December")
+           .withByear("2002")
+           .withAddress2("Москва, Сосновая ул. 205-3")
+           .withNotes("Модифицированный пользователь");
+
+      app.contact().fillContactForm(contact, false);
+      app.contact().submitContactModification();
       app.goTo().gotoHomePage();
 
-      List<ContactData> after = app.getContactHelper().getContactList();
+      Contacts after = app.contact().all();
 
       Assert.assertEquals(after.size(), before.size());
-
+/*
       ContactData contact = new ContactData(before.get(before.size()-1).getId(), firstName, lastName, address);
       before.remove(before.size()-1);
       before.add(contact);
 
       Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
       before.sort(byId);
-      after.sort(byId);
+      after.sort(byId); */
 
       Assert.assertEquals(before, after);
+      MatcherAssert.assertThat(after, CoreMatchers.equalTo(before)); //ff
    }
 
    @Test (enabled = false)
    public void testContactModification2() {
       app.goTo().gotoHomePage();
-      app.getContactHelper().viewContactDetails();
-      app.getContactHelper().initContactModificationInView();
-      app.getContactHelper().fillContactForm(
-           new ContactData("Антоний", "Максимович", "Погорельский", "Black hen", "Ant", "LTD", "Москва, Нагорный проезд 9", "8495555555557", "+7910555555557",
-                           "testM@mail.ru", "1", "December", "2001", "Москва, Сосновая ул. 205-3", "Модифицированный пользователь", null), false);
-      app.getContactHelper().submitContactModification();
+      ContactData contact = new ContactData()
+           .withFirstname("Антоний")
+           .withMiddlename("Максимович")
+           .withLastname("Погорельский")
+           .withTitle("Black hen")
+           .withNickname("Ant")
+           .withCompany("LTD")
+           .withAddress("Москва, Нагорный проезд 9")
+           .withHomephone("8499555555557")
+           .withMobile("+7910555555558")
+           .withEmail("mtest@mail.ru")
+           .withBday("1")
+           .withBmonth("December")
+           .withByear("2002")
+           .withAddress2("Москва, Сосновая ул. 205-3")
+           .withNotes("Модифицированный пользователь");
+
+
+      app.contact().viewContactDetails();
+      app.contact().initContactModificationInView();
+      app.contact().fillContactForm(contact, false);
+      app.contact().submitContactModification();
       app.goTo().gotoHomePage();
    }
 
@@ -76,21 +110,19 @@ public class ContactModificationTests extends TestBase {
    public void testAddContactToGroup() {
       String groupName = "Test_M";
       app.goTo().gotoHomePage();
-      if (! app.getContactHelper().checkGroupList()) {
+      if (! app.contact().isGroupListEmpty()) {
          app.goTo().groupPage();
          app.group().create(new GroupData().withName(groupName).withHeader("TestHeader A").withFooter("TestFooter A"));
          app.goTo().gotoHomePage();
       } else {
-         groupName = app.getContactHelper().getFirstGroupName();
+         groupName = app.contact().groupNameFirstInList();
       }
-      if (! app.getContactHelper().isThereAContact()) {
-         app.getContactHelper().createContact(new ContactData("Contact test m", "test m", "test m", null, null,
-                                                              null, null, null, null, null, "5", "May",
-                                                              "2000", null, null, groupName), true);
+      if (! app.contact().isThereAContact()) {
+         app.contact().create(new ContactData().withFirstname("Contact test m").withMiddlename("test m").withLastname("test m").withGroup(groupName), true);
          app.goTo().gotoHomePage();
       }
-      app.getContactHelper().selectContact(0);
-      app.getContactHelper().addContactToGroup();
+      app.contact().selectContact(0);
+      app.contact().addContactToGroup();
       app.goTo().gotoHomePage();
    }
 }

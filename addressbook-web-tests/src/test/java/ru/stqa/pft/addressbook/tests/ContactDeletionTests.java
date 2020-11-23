@@ -18,30 +18,29 @@ public class ContactDeletionTests extends TestBase {
    public void testContactDeletion() {
 
       app.goTo().gotoHomePage();
-      List<ContactData> before = app.getContactHelper().getContactList();
+      List<ContactData> before = app.contact().getContactList();
       if (before.size() == 0) {
          String groupName = "Test_D";
-         if (!app.getContactHelper().checkGroupList()) {
+         if (app.contact().isGroupListEmpty()) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName(groupName).withHeader("TestHeader D").withFooter("TestFooter D"));
             app.goTo().gotoHomePage();
          } else {
-            groupName = app.getContactHelper().getFirstGroupName();
+            groupName = app.contact().groupNameFirstInList();
          }
 
          //if (! app.getContactHelper().isThereAContact()) {
-         app.getContactHelper().createContact(new ContactData("Contact test d", "test d", "test d", null, null,
-                                                              null, null, null, null, null, "5", "May",
-                                                              "2000", null, null, groupName), true);
+         app.contact().create(new ContactData().withFirstname("Contact test d").withMiddlename("test d").withLastname("test d")
+                              .withBday("5").withBmonth("May").withByear("2000").withGroup(groupName), true);
          app.goTo().gotoHomePage();
          //}
-         before = app.getContactHelper().getContactList();
+         before = app.contact().getContactList();
       }
-      app.getContactHelper().selectContact(before.size()-1);
-      app.getContactHelper().deleteSelectedContact();
-      app.getContactHelper().waitMsg();
+      app.contact().selectContact(before.size() - 1);
+      app.contact().deleteSelectedContact();
+      app.contact().waitMsg();
       app.goTo().gotoHomePage();
-      List<ContactData> after = app.getContactHelper().getContactList();
+      List<ContactData> after = app.contact().getContactList();
 
       Assert.assertEquals(after.size(), before.size()-1);
 

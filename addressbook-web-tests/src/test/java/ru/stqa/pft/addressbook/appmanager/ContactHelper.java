@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
 /**
  * Description.
@@ -90,10 +91,11 @@ public class ContactHelper extends HelperBase {
       click(By.name("add"));
    }
 
-   public void createContact(ContactData contactData, boolean b) {
+   public void create(ContactData contactData, boolean b) {
       initContactCreation();
       fillContactForm(contactData, b);
       submitContactCreation();
+      waitMsg();
       //app.getNavigationHelper().gotoHomePage();
    }
 
@@ -101,13 +103,13 @@ public class ContactHelper extends HelperBase {
       return isElementPresent(By.name("selected[]"));
    }
 
-   public boolean checkGroupList() {
+   public boolean isGroupListEmpty() {
       int n = wd.findElements(By.cssSelector("select[name='to_group'] option")).size();
-      System.out.println("n: "+n);
-      return (n>0);
+      //System.out.println("n: "+n);
+      return (n == 0);
    }
 
-   public String getFirstGroupName() {
+   public String groupNameFirstInList() {
       System.out.println(wd.findElements(By.cssSelector("select[name='to_group'] option")).get(0).getText());
       return wd.findElements(By.cssSelector("select[name='to_group'] option")).get(0).getText();
    }
@@ -119,17 +121,33 @@ public class ContactHelper extends HelperBase {
          int id = Integer.parseInt(e.findElements(By.cssSelector("td input")).get(0).getAttribute("id"));
          String lastName = e.findElements(By.tagName("td")).get(1).getText();
          String firstName = e.findElements(By.tagName("td")).get(2).getText();
-         ContactData contact = new ContactData(id,  firstName, lastName, null);
+         ContactData contact = new ContactData().withId(id).withFirstname(firstName).withLastname(lastName);
          contacts.add(contact);
       }
       return contacts;
    }
 
+   public Contacts all() {
+      Contacts contacts = new Contacts();
+      List<WebElement> elements  = wd.findElements(By.cssSelector("[name='entry']"));
+      for (WebElement e : elements) {
+         int id = Integer.parseInt(e.findElements(By.cssSelector("td input")).get(0).getAttribute("id"));
+         System.out.println("id: "+id);
+         String lastName = e.findElements(By.tagName("td")).get(1).getText();
+         String firstName = e.findElements(By.tagName("td")).get(2).getText();
+         //ContactData contact = new ContactData(id,  firstName, lastName, null);
+         //contacts.add(contact);
+         contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
+      }
+      return contacts;
+   }
+
    public void waitMsg() {
-      int i = 0;
+      /*int i = 0;
       while (isElementPresent(By.className("msgbox"))) {
          i++;
       }
-      System.out.println("Ожидание: "+i);
+      System.out.println("Ожидание: "+i);*/
+      wd.findElement(By.cssSelector("div.msgbox"));
    }
 }

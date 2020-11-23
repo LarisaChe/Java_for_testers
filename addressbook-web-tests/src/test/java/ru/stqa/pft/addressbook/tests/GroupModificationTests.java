@@ -4,16 +4,8 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.testng.Assert.*;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.internal.BaseTestMethod;
 
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
@@ -25,7 +17,7 @@ import ru.stqa.pft.addressbook.model.Groups;
  */
 public class GroupModificationTests extends TestBase {
 
-   @BeforeMethod
+   @BeforeMethod(enabled = false)
    public void ensurePreconditions() {
       app.goTo().groupPage();
       if (app.group().all().size() == 0) {
@@ -33,7 +25,7 @@ public class GroupModificationTests extends TestBase {
       }
    }
 
-   @Test
+   @Test(enabled = false)
    public void testGroupModification() {
       Groups before = app.group().all();
       GroupData modifiedGroup = before.iterator().next();
