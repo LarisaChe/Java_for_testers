@@ -104,12 +104,14 @@ public class ContactHelper extends HelperBase {
       initContactModification(id);
       fillContactForm(contact, false);
       submitContactModification();
+      waitMsg();
    }
 
    public void modifyOnViewPage(ContactData contact) {
       initModificationInView();
       fillContactForm(contact, false);
       submitContactModification();
+      waitMsg();
    }
 
    public void delete(ContactData contact) {

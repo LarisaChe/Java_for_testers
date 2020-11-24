@@ -50,17 +50,19 @@ public class ContactModificationTests extends TestBase {
       }
    }
 
-   @Test 
+   @Test
    public void testContactModification1() {
       app.goTo().gotoHomePage();
       Contacts before = app.contact().all();
       ContactData modifiedContact = before.iterator().next();
-
+      contact.withId(modifiedContact.getId());
       app.contact().modify(modifiedContact.getId(), contact);
       app.goTo().gotoHomePage();
 
       Contacts after = app.contact().all();
-
+      System.out.println("ContactModification1");
+      System.out.println("after.size(): "+after.size());
+      System.out.println("before.size(): "+before.size());
       assertEquals(after.size(), before.size());
 
       assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact))); //ff
@@ -72,12 +74,15 @@ public class ContactModificationTests extends TestBase {
       Contacts before = app.contact().all();
 
       ContactData modifiedContact = before.iterator().next();
+      contact.withId(modifiedContact.getId());
       app.contact().view(modifiedContact.getId());
       app.contact().modifyOnViewPage(contact);
 
       app.goTo().gotoHomePage();
       Contacts after = app.contact().all();
-
+      System.out.println("ContactModification2");
+      System.out.println("after.size(): "+after.size());
+      System.out.println("before.size(): "+before.size());
       assertEquals(after.size(), before.size());
       assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
    }
@@ -93,8 +98,10 @@ public class ContactModificationTests extends TestBase {
 
       app.goTo().gotoHomePage();
       Contacts after = app.contact().all();
-
+      System.out.println("ContactAddContactToGroups");
+      System.out.println("after.size(): "+after.size());
+      System.out.println("before.size(): "+before.size());
       assertEquals(after.size(), before.size());
-      assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
+      assertThat(after, equalTo(before));
    }
 }

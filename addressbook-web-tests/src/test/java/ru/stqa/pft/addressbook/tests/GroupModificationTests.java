@@ -17,7 +17,7 @@ import ru.stqa.pft.addressbook.model.Groups;
  */
 public class GroupModificationTests extends TestBase {
 
-   @BeforeMethod(enabled = false)
+   @BeforeMethod
    public void ensurePreconditions() {
       app.goTo().groupPage();
       if (app.group().all().size() == 0) {
@@ -25,8 +25,9 @@ public class GroupModificationTests extends TestBase {
       }
    }
 
-   @Test(enabled = false)
+   @Test
    public void testGroupModification() {
+      app.goTo().groupPage();
       Groups before = app.group().all();
       GroupData modifiedGroup = before.iterator().next();
       GroupData group = new GroupData()
