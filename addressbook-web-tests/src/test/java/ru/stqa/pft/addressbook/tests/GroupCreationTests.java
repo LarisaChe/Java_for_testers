@@ -10,7 +10,7 @@ import ru.stqa.pft.addressbook.model.Groups;
 
 public class GroupCreationTests extends TestBase {
 
-   @Test(enabled = false)
+   @Test
    public void testGroupCreation() throws Exception {
       app.goTo().groupPage();
 
