@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -31,8 +30,9 @@ public class ContactHelper extends HelperBase {
       type(By.name("title"), contactData.getTitle());
       type(By.name("company"), contactData.getCompany());
       type(By.name("address"), contactData.getAddress());
-      type(By.name("home"), contactData.getHomephone());
-      type(By.name("mobile"), contactData.getMobile());
+      type(By.name("home"), contactData.getHomePhone());
+      type(By.name("mobile"), contactData.getMobilePhone());
+      type(By.name("work"), contactData.getWorkPhone());
       type(By.name("email"), contactData.getEmail());
 
       click(By.name("bday"));
@@ -154,4 +154,28 @@ public class ContactHelper extends HelperBase {
       System.out.println("Ожидание: "+i);*/
       wd.findElement(By.cssSelector("div.msgbox"));
    }
+
+   public ContactData infoFromEditForm(ContactData contact) {
+      initContactModificationByID(contact.getId());
+      String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
+      String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+      String homePhone = wd.findElement(By.name("home")).getAttribute("value");
+      String mobilePhone = wd.findElement(By.name("mobile")).getAttribute("value");
+      String workPhone = wd.findElement(By.name("work")).getAttribute("value");
+
+      wd.navigate().back();
+      return new ContactData().withId(contact.getId()).withFirstname(firstName).withLastname(lastName)
+           .withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone);
+   }
+
+   private void initContactModificationByID(int id) {
+     /* WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id)));
+      WebElement row = checkbox.findElement(By.xpath("./../.."));
+      List<WebElement> cells = row.findElements(By.tagName("td"));
+      cells.get(7).findElement(By.tagName("a")).click(); */
+
+      //wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a", id))).click();
+      wd.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[8]/a", id))).click();
+   }
+
 }
