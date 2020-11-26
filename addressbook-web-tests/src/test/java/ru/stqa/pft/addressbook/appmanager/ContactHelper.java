@@ -141,9 +141,11 @@ public class ContactHelper extends HelperBase {
         // System.out.println("id: "+id);
          String lastName = e.findElements(By.tagName("td")).get(1).getText();
          String firstName = e.findElements(By.tagName("td")).get(2).getText();
-         String[] phones = e.findElements(By.tagName("td")).get(5).getText().split("\n");
+         //String[] phones = e.findElements(By.tagName("td")).get(5).getText().split("\n");
+         String allPhones = e.findElements(By.tagName("td")).get(5).getText();
          contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
-                .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]));
+                      .withAllPhones(allPhones));
+               // .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]));
       }
       return contacts;
    }
