@@ -33,11 +33,36 @@ public class ContactPhoneTests extends TestBase {
       assertThat(contact.getWorkPhone(), equalTo(cleaned(contactInfoFromEditForm.getWorkPhone())));*/
    }
 
+   @Test
+   public void testContactAddress() {
+      app.goTo().gotoHomePage();
+      ContactData contact = app.contact().all().iterator().next();
+      ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
+
+      assertThat(cleaned(contact.getAddress()), equalTo(cleaned(contactInfoFromEditForm.getAddress())));
+   }
+
+   @Test
+   public void testContactEmails() {
+      app.goTo().gotoHomePage();
+      ContactData contact = app.contact().all().iterator().next();
+      ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
+
+      assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
+   }
+
    private String mergePhones(ContactData contact) {
       return Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone())
             .stream().filter((s) -> ! s.equals(""))
             .map(ContactPhoneTests::cleaned)
             .collect(Collectors.joining("\n"));
+   }
+
+   private String mergeEmails(ContactData contact) {
+      return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
+                   .stream().filter((s) -> ! s.equals(""))
+                   .map(ContactPhoneTests::cleaned)
+                   .collect(Collectors.joining("\n"));
    }
 
    public static String cleaned(String phone) {

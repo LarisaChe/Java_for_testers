@@ -142,9 +142,11 @@ public class ContactHelper extends HelperBase {
          String lastName = e.findElements(By.tagName("td")).get(1).getText();
          String firstName = e.findElements(By.tagName("td")).get(2).getText();
          //String[] phones = e.findElements(By.tagName("td")).get(5).getText().split("\n");
+         String address = e.findElements(By.tagName("td")).get(3).getText();
+         String allEmails = e.findElements(By.tagName("td")).get(4).getText();
          String allPhones = e.findElements(By.tagName("td")).get(5).getText();
          contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
-                      .withAllPhones(allPhones));
+                  .withAddress(address).withAllEmails(allEmails).withAllPhones(allPhones));
                // .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]));
       }
       return contacts;
@@ -166,10 +168,14 @@ public class ContactHelper extends HelperBase {
       String homePhone = wd.findElement(By.name("home")).getAttribute("value");
       String mobilePhone = wd.findElement(By.name("mobile")).getAttribute("value");
       String workPhone = wd.findElement(By.name("work")).getAttribute("value");
-
+      String address = wd.findElement(By.name("address")).getAttribute("value");
+      String email = wd.findElement(By.name("email")).getAttribute("value");
+      String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+      String email3 = wd.findElement(By.name("email3")).getAttribute("value");
       wd.navigate().back();
       return new ContactData().withId(contact.getId()).withFirstname(firstName).withLastname(lastName)
-           .withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone);
+           .withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone)
+           .withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3);
    }
 
    private void initContactModificationByID(int id) {
