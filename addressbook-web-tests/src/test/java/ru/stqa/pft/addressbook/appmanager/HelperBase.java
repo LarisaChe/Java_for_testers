@@ -1,5 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.openqa.selenium.By;
@@ -33,6 +34,12 @@ public class HelperBase {
       // catch (IllegalArgumentException e) {
       catch (Exception e) {
          System.out.println("Возникло исключение, но мы его обошли: "+e.getMessage());
+      }
+   }
+
+   protected void attach(By locator, File file) {
+      if (file != null) {
+         wd.findElement(locator).sendKeys(file.getAbsolutePath());
       }
    }
 

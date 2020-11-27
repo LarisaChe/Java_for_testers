@@ -4,6 +4,8 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.testng.Assert.*;
 
+import java.io.File;
+
 import org.testng.annotations.*;
 
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -32,6 +34,7 @@ public class ContactCreationTests extends TestBase {
       app.goTo().gotoHomePage();
       Contacts before = app.contact().all();
 
+      File photo = new File("src/resource/fluke.png");
       ContactData contact = new ContactData()
            .withFirstname("Антоний")
            .withMiddlename("Васильевич")
@@ -49,6 +52,7 @@ public class ContactCreationTests extends TestBase {
            .withByear("1991")
            .withAddress2("Москва, Сосновая ул. 3-205")
            .withNotes("Новый пользователь")
+           .withPhoto(photo)
            .withGroup(groupName);
 
       app.contact().create(contact, true);
@@ -64,4 +68,11 @@ public class ContactCreationTests extends TestBase {
       assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
    }
 
+   /*public void testCurrentDir() {
+      File currentDir = new File(".");
+      File photo = new File("src/resource/fluke.png");
+      System.out.println(currentDir.getAbsolutePath());
+      System.out.println(photo.getAbsolutePath());
+      System.out.println(photo.exists());
+   } */
 }
