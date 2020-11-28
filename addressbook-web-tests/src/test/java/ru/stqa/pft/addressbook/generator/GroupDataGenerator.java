@@ -10,6 +10,8 @@ import java.util.List;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import ru.stqa.pft.addressbook.model.GroupData;
 
@@ -21,7 +23,7 @@ public class GroupDataGenerator {
    @Parameter (names = "-f", description = "Target file")
    public String file;
 
-   @Parameter (names = "-d", description = "Data format xml or csv")
+   @Parameter (names = "-d", description = "Data format xml or csv or json")
    public String format;
 
    private void run () throws IOException {
@@ -30,9 +32,20 @@ public class GroupDataGenerator {
          saveAsCSV(groups, new File(file));
       } else if (format.equals("xml")) {
          saveAsXML(groups, new File(file));
+      } else if (format.equals("json")) {
+         saveAsJSON(groups, new File(file));
       } else {
          System.out.println("Unrecognized format: "+format);
       }
+   }
+
+   private void saveAsJSON(List<GroupData> groups, File file) throws IOException {
+     // Gson gson = new Gson();
+      Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+      String json = gson.toJson(groups);
+      Writer writer = new FileWriter(file);
+      writer.write(json);
+      writer.close();
    }
 
    private void saveAsXML(List<GroupData> groups, File file) throws IOException {
@@ -75,9 +88,9 @@ public class GroupDataGenerator {
    private  List<GroupData> generateGroups(int count) {
       List<GroupData> groups = new ArrayList<GroupData>();
       for (int i=0; i<count; i++) {
-         groups.add(new GroupData().withName(String.format("Test G%s", i))
-                                   .withHeader(String.format("Header G%s", i))
-                                   .withFooter(String.format("Footer G%s", i)));
+         groups.add(new GroupData().withName(String.format("Test %s G%s", format, i))
+                                   .withHeader(String.format("Header %s G%s", format, i))
+                                   .withFooter(String.format("Footer %s G%s", format, i)));
       }
       return groups;
    }

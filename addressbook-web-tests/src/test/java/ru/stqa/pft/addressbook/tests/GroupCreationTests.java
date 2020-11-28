@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
@@ -24,7 +27,37 @@ import ru.stqa.pft.addressbook.model.Groups;
 public class GroupCreationTests extends TestBase {
 
    @DataProvider
-   public Iterator<Object[]> validGroups() throws IOException {
+   public Iterator<Object[]> validGroupsFromCSV() throws IOException {
+      List<Object[]> list = new ArrayList<Object[]>();
+      BufferedReader reader = new BufferedReader(new FileReader(new File("src/resource/groups2.csv")));
+      String line = reader.readLine();
+      while (line != null) {
+         String[] split = line.split(";");
+         list.add(new Object[] {new GroupData().withName(split[0]).withHeader(split[1]).withFooter(split[2])});
+         line = reader.readLine();
+      }
+       return list.iterator();
+   }
+
+   @DataProvider
+   public Iterator<Object[]> validGroupsFromJSON() throws IOException {
+      BufferedReader reader = new BufferedReader(new FileReader(new File("src/resource/groups.json")));
+      String json = "";
+      String line = reader.readLine();
+      while (line != null) {
+         //String[] split = line.split(";");
+         //list.add(new Object[] {new GroupData().withName(split[0]).withHeader(split[1]).withFooter(split[2])});
+         json += line;
+         line = reader.readLine();
+      }
+      Gson gson = new Gson();
+      List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType()); // это сложный способ только для списков объектов
+      return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+      // return list.iterator();
+   }
+
+   @DataProvider
+   public Iterator<Object[]> validGroupsFromXML() throws IOException {
       //List<Object[]> list = new ArrayList<Object[]>();
       //BufferedReader reader = new BufferedReader(new FileReader(new File("src/resource/groups2.csv")));
       BufferedReader reader = new BufferedReader(new FileReader(new File("src/resource/groups.xml")));
@@ -43,7 +76,7 @@ public class GroupCreationTests extends TestBase {
       // return list.iterator();
    }
 
-   @Test (dataProvider = "validGroups")
+   @Test (dataProvider = "validGroupsFromJSON")
    public void testGroupCreation(GroupData group) throws Exception {
       app.goTo().groupPage();
 

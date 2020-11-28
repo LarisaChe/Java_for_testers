@@ -10,7 +10,8 @@ dependencies {
             'org.testng:testng:7.0.0',
             'org.hamcrest:hamcrest:2.2',
             'com.beust:jcommander:1.78',
-            'com.thoughtworks.xstream:xstream:1.4.14'
+            'com.thoughtworks.xstream:xstream:1.4.14',
+            'com.google.code.gson:gson:2.8.6'
     )
 }
 
