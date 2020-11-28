@@ -3,6 +3,12 @@ package ru.stqa.pft.addressbook.tests;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,12 +22,16 @@ import ru.stqa.pft.addressbook.model.Groups;
 public class GroupCreationTests extends TestBase {
 
    @DataProvider
-   public Iterator<Object[]> validGroups() {
+   public Iterator<Object[]> validGroups() throws IOException {
       List<Object[]> list = new ArrayList<Object[]>();
-      ;
-      list.add(new Object[] {new GroupData().withName("test V1").withHeader("header V1").withFooter("footer V1")});
-      list.add(new Object[] {new GroupData().withName("test V2").withHeader("header V2").withFooter("footer V2")});
-      list.add(new Object[] {new GroupData().withName("test V3").withHeader("header V3").withFooter("footer V3")});
+      //list.add(new Object[] {new GroupData().withName("test V1").withHeader("header V1").withFooter("footer V1")});
+      BufferedReader reader = new BufferedReader(new FileReader(new File("src/resource/groups2.csv")));
+      String line = reader.readLine();
+      while (line != null) {
+         String[] split = line.split(";");
+         list.add(new Object[] {new GroupData().withName(split[0]).withHeader(split[1]).withFooter(split[2])});
+         line = reader.readLine();
+      }
       return list.iterator();
    }
 
