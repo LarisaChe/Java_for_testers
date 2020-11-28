@@ -37,16 +37,22 @@ public class ContactHelper extends HelperBase {
       type(By.name("work"), contactData.getWorkPhone());
       type(By.name("email"), contactData.getEmail());
 
-      click(By.name("bday"));
-      new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getBday());
-      click(By.xpath("//option[@value='7']"));
-      click(By.name("bmonth"));
-      new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getBmonth());
-      click(By.xpath("//option[@value='November']"));
+      if (contactData.getBday() != null) {
+         click(By.name("bday"));
+         new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getBday());
+         //click(By.xpath(String.format("//option[@value='%s']",contactData.getBday())));
+      }
+      if (contactData.getBmonth() != null) {
+         click(By.name("bmonth"));
+         new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getBmonth());
+         //click(By.xpath(String.format("//option[@value='%s']",contactData.getBmonth())));
+      }
       type(By.name("byear"),contactData.getByear());
       //wd.findElement(By.xpath("(//option[@value='2'])[3]")).click();
       if (creation) {
-         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+         if (contactData.getGroup() != null) {
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+         }
       } else {
          Assert.assertFalse(isElementPresent(By.name("new_group")));
       }

@@ -4,10 +4,18 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.testng.Assert.*;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.testng.annotations.*;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
@@ -28,9 +36,41 @@ public class ContactCreationTests extends TestBase {
       }
    }
 
-   @Test
-   public void testContactCreation() throws Exception {
+   @DataProvider
+   public Iterator<Object[]> validContactsFromJSON() throws IOException {
+      BufferedReader reader = new BufferedReader(new FileReader(new File("src/resource/contacts.json")));
+      String json = "";
+      String line = reader.readLine();
+      while (line != null) {
+         json += line;
+         line = reader.readLine();
+      }
+      Gson gson = new Gson();
+      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType()); // это сложный способ только для списков объектов
+      return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+   }
 
+   @Test (dataProvider = "validContactsFromJSON")
+   public void testContactCreationWithDataProvider(ContactData contact) throws Exception {
+      app.goTo().gotoHomePage();
+      Contacts before = app.contact().all();
+
+      app.contact().create(contact, true);
+
+      app.goTo().gotoHomePage();
+
+      Contacts after = app.contact().all();
+      System.out.println("ContactCreation");
+      System.out.println("after.size(): "+after.size());
+      System.out.println("before.size(): "+before.size());
+      assertEquals(after.size(), before.size() + 1);
+      // assertThat(after.size(), equalTo(before.size() + 1));
+      assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+   }
+
+
+   @Test (enabled = false)
+   public void testContactCreation() throws Exception {
       app.goTo().gotoHomePage();
       Contacts before = app.contact().all();
 
