@@ -1,0 +1,38 @@
+[
+  {
+    "firstname": "Firstname test json G0",
+    "middlename": "Middlename test json G0",
+    "lastname": "Lastname test json G0",
+    "nickname": "Nickname test json G0",
+    "address": "Address test json G0",
+    "mobilePhone": "+7(900)5005050",
+    "email": "test_json_0@email.ru"
+  },
+  {
+    "firstname": "Firstname test json G1",
+    "middlename": "Middlename test json G1",
+    "lastname": "Lastname test json G1",
+    "nickname": "Nickname test json G1",
+    "address": "Address test json G1",
+    "mobilePhone": "+7(900)5005051",
+    "email": "test_json_1@email.ru"
+  },
+  {
+    "firstname": "Firstname test json G2",
+    "middlename": "Middlename test json G2",
+    "lastname": "Lastname test json G2",
+    "nickname": "Nickname test json G2",
+    "address": "Address test json G2",
+    "mobilePhone": "+7(900)5005052",
+    "email": "test_json_2@email.ru"
+  },
+  {
+    "firstname": "Firstname test json G3",
+    "middlename": "Middlename test json G3",
+    "lastname": "Lastname test json G3",
+    "nickname": "Nickname test json G3",
+    "address": "Address test json G3",
+    "mobilePhone": "+7(900)5005053",
+    "email": "test_json_3@email.ru"
+  }
+]
