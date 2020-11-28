@@ -12,10 +12,12 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.thoughtworks.xstream.XStream;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
@@ -23,16 +25,22 @@ public class GroupCreationTests extends TestBase {
 
    @DataProvider
    public Iterator<Object[]> validGroups() throws IOException {
-      List<Object[]> list = new ArrayList<Object[]>();
-      //list.add(new Object[] {new GroupData().withName("test V1").withHeader("header V1").withFooter("footer V1")});
-      BufferedReader reader = new BufferedReader(new FileReader(new File("src/resource/groups2.csv")));
+      //List<Object[]> list = new ArrayList<Object[]>();
+      //BufferedReader reader = new BufferedReader(new FileReader(new File("src/resource/groups2.csv")));
+      BufferedReader reader = new BufferedReader(new FileReader(new File("src/resource/groups.xml")));
+      String xml = "";
       String line = reader.readLine();
       while (line != null) {
-         String[] split = line.split(";");
-         list.add(new Object[] {new GroupData().withName(split[0]).withHeader(split[1]).withFooter(split[2])});
+         //String[] split = line.split(";");
+         //list.add(new Object[] {new GroupData().withName(split[0]).withHeader(split[1]).withFooter(split[2])});
+         xml += line;
          line = reader.readLine();
       }
-      return list.iterator();
+      XStream xStream = new XStream();
+      xStream.processAnnotations(GroupData.class);
+      List<GroupData> groups = (List<GroupData>) xStream.fromXML(xml);
+      return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+      // return list.iterator();
    }
 
    @Test (dataProvider = "validGroups")

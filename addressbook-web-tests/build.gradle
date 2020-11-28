@@ -9,7 +9,8 @@ dependencies {
             'org.seleniumhq.selenium:selenium-java:3.141.59',
             'org.testng:testng:7.0.0',
             'org.hamcrest:hamcrest:2.2',
-            'com.beust:jcommander:1.78'
+            'com.beust:jcommander:1.78',
+            'com.thoughtworks.xstream:xstream:1.4.14'
     )
 }
 
