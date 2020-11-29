@@ -19,7 +19,7 @@ import ru.stqa.pft.addressbook.model.ContactData;
  */
 public class TestBase  {
 
-   protected static final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);//(BrowserType.CHROME); //BrowserType.FIREFOX); //BrowserType.IE
+   protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
 
    @BeforeSuite
    public void setUp() throws Exception {
