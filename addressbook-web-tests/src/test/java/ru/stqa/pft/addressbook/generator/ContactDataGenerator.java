@@ -15,7 +15,9 @@ import com.google.gson.GsonBuilder;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 public class ContactDataGenerator {
-
+// параметры из конфигурации
+// -f src/resource/group.xml -d xml -c 4
+// D:\Users\lchernaya\Documents\GitHub\Java_for_testers\addressbook-web-tests
    @Parameter(names = "-c",  description = "Contact count")
    public int count;
 
@@ -55,9 +57,10 @@ public class ContactDataGenerator {
       //System.out.println(new File(".").getAbsolutePath());
       Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
       String json = gson.toJson(contacts);
-      Writer writer = new FileWriter(file);
-      writer.write(json);
-      writer.close();
+      try (Writer writer = new FileWriter(file)) {
+         writer.write(json);
+      }
+      //writer.close();
    }
 
    private  List<ContactData> generateContacts(int count) {
