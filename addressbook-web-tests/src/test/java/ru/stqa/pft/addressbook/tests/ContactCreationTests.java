@@ -38,7 +38,7 @@ public class ContactCreationTests extends TestBase {
 
    @DataProvider
    public Iterator<Object[]> validContactsFromJSON() throws IOException {
-      try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/resource/contacts.json")))) {
+      try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resource/contacts.json")))) {
          String json = "";
          String line = reader.readLine();
          while (line != null) {
@@ -77,7 +77,7 @@ public class ContactCreationTests extends TestBase {
       app.goTo().gotoHomePage();
       Contacts before = app.contact().all();
 
-      File photo = new File("src/resource/fluke.png");
+      File photo = new File("src/test/resource/fluke.png");
       ContactData contact = new ContactData()
            .withFirstname("Антоний")
            .withMiddlename("Васильевич")
