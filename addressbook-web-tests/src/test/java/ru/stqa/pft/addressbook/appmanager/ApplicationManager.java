@@ -56,6 +56,22 @@ public class ApplicationManager  {
       sessionHelper.login(properties.getProperty("web.adminLogin"),properties.getProperty("web.adminPassword"));
    }
 
+   public String formatDataForGroup() {
+      return properties.getProperty("data.formatForGroup");
+   }
+
+   public  String fileDataForGroup() {
+      return "src/test/resource/"+properties.getProperty("data.fileForGroup");
+   }
+
+   public String formatDataForContact() {
+      return properties.getProperty("data.formatForContact");
+   }
+
+   public  String fileDataForContact() {
+      return "src/test/resource/"+properties.getProperty("data.fileForContact");
+   }
+
    public void stop() {
       wd.quit();
    }

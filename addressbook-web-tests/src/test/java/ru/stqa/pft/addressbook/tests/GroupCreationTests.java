@@ -5,10 +5,8 @@ import static org.hamcrest.MatcherAssert.*;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +16,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import ru.stqa.pft.addressbook.model.GroupData;
@@ -26,10 +23,20 @@ import ru.stqa.pft.addressbook.model.Groups;
 
 public class GroupCreationTests extends TestBase {
 
+
+   @DataProvider
+   public Iterator<Object[]> validGroups() throws IOException {
+      if (app.formatDataForGroup().equals("xml"))   return validGroupsFromXML();
+       else if (app.formatDataForGroup().equals("json"))   return validGroupsFromJSON();
+       else if (app.formatDataForGroup().equals("csv"))   return validGroupsFromCSV();
+       else System.out.println("Неправильно указан формат данных для групп");
+       return null;
+   }
+
    @DataProvider
    public Iterator<Object[]> validGroupsFromCSV() throws IOException {
       List<Object[]> list = new ArrayList<Object[]>();
-     try(BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resource/groups2.csv")))) {
+     try(BufferedReader reader = new BufferedReader(new FileReader(new File(app.fileDataForGroup())))) { // "src/test/resource/groups2.csv"
         String line = reader.readLine();
         while (line != null) {
            String[] split = line.split(";");
@@ -42,34 +49,25 @@ public class GroupCreationTests extends TestBase {
 
    @DataProvider
    public Iterator<Object[]> validGroupsFromJSON() throws IOException {
-      try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resource/groups.json")))) {
+      try (BufferedReader reader = new BufferedReader(new FileReader(new File(app.fileDataForGroup())))) { //"src/test/resource/groups.json"
          String json = "";
          String line = reader.readLine();
          while (line != null) {
-            //String[] split = line.split(";");
-            //list.add(new Object[] {new GroupData().withName(split[0]).withHeader(split[1]).withFooter(split[2])});
-            json += line;
+             json += line;
             line = reader.readLine();
          }
          Gson gson = new Gson();
-         List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>() {
-
-         }.getType()); // это сложный способ только для списков объектов
+         List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>() {}.getType()); // это сложный способ только для списков объектов
          return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
-         // return list.iterator();
       }
    }
 
    @DataProvider
    public Iterator<Object[]> validGroupsFromXML() throws IOException {
-      //List<Object[]> list = new ArrayList<Object[]>();
-      //BufferedReader reader = new BufferedReader(new FileReader(new File("src/resource/groups2.csv")));
-     try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resource/groups.xml")))) {
+     try (BufferedReader reader = new BufferedReader(new FileReader(new File(app.fileDataForGroup())))) { //"src/test/resource/groups.xml"
         String xml = "";
         String line = reader.readLine();
         while (line != null) {
-           //String[] split = line.split(";");
-           //list.add(new Object[] {new GroupData().withName(split[0]).withHeader(split[1]).withFooter(split[2])});
            xml += line;
            line = reader.readLine();
         }
@@ -77,16 +75,14 @@ public class GroupCreationTests extends TestBase {
         xStream.processAnnotations(GroupData.class);
         List<GroupData> groups = (List<GroupData>) xStream.fromXML(xml);
         return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
-        // return list.iterator();
      }
    }
 
-   @Test (dataProvider = "validGroupsFromJSON")
+
+   @Test (dataProvider = "validGroups") // (dataProvider = "validGroupsFromXML")
    public void testGroupCreation(GroupData group) throws Exception {
       app.goTo().groupPage();
-
       Groups before = app.group().all();
-      //GroupData group = new GroupData().withName(name).withHeader(header).withFooter(footer);
       app.group().create(group);
       assertThat(app.group().count(), equalTo(before.size() + 1));
       Groups after = app.group().all();
@@ -97,7 +93,6 @@ public class GroupCreationTests extends TestBase {
    @Test
    public void testBadGroupCreation() throws Exception {
       app.goTo().groupPage();
-
       Groups before = app.group().all();
       GroupData group = new GroupData().withName("Te'st").withHeader("Test header Cr1").withFooter("Test footer Cr1");
       app.group().create(group);

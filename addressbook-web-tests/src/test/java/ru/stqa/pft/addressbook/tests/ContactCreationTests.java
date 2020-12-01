@@ -37,8 +37,15 @@ public class ContactCreationTests extends TestBase {
    }
 
    @DataProvider
+   public Iterator<Object[]> validContacts() throws IOException {
+      if (app.formatDataForContact().equals("json"))   return validContactsFromJSON();
+      else System.out.println("Неправильно указан формат данных для групп");
+      return null;
+   }
+
+   @DataProvider
    public Iterator<Object[]> validContactsFromJSON() throws IOException {
-      try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resource/contacts.json")))) {
+      try (BufferedReader reader = new BufferedReader(new FileReader(new File(app.fileDataForContact())))) { //"src/test/resource/contacts.json"
          String json = "";
          String line = reader.readLine();
          while (line != null) {
@@ -46,14 +53,12 @@ public class ContactCreationTests extends TestBase {
             line = reader.readLine();
          }
          Gson gson = new Gson();
-         List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {
-
-         }.getType()); // это сложный способ только для списков объектов
+         List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {}.getType()); // это сложный способ только для списков объектов
          return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
       }
    }
 
-   @Test (dataProvider = "validContactsFromJSON")
+   @Test (dataProvider = "validContacts")
    public void testContactCreationWithDataProvider(ContactData contact) throws Exception {
       app.goTo().gotoHomePage();
       Contacts before = app.contact().all();
