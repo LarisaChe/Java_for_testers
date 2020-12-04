@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -22,7 +24,6 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 public class GroupCreationTests extends TestBase {
-
 
    @DataProvider
    public Iterator<Object[]> validGroups() throws IOException {
@@ -77,7 +78,6 @@ public class GroupCreationTests extends TestBase {
         return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
      }
    }
-
 
    @Test (dataProvider = "validGroups") // (dataProvider = "validGroupsFromXML")
    public void testGroupCreation(GroupData group) throws Exception {
