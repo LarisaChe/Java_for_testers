@@ -29,9 +29,19 @@ public class GroupData {
       this.name = name;
       this.header = header;
       this.footer = footer;
+   }  */
+
+ /*  @Override
+   public String toString() {
+      return "GroupData{" +
+             "id=" + id +
+             ", name='" + name + '\'' +
+             ", header='" + header + '\'' +
+             ", footer='" + footer + '\'' +
+             '}';
    } */
 
-   @Override
+      @Override
    public String toString() {
       return "GroupData{" +
              "id='" + id + '\'' +
