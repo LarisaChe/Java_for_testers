@@ -11,18 +11,13 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-/**
- * Description.
- *
- * @author lchernaya
- */
 public class ContactDeletionTests extends TestBase {
 
    @BeforeMethod
    public void ensurePreconditions() {
       app.goTo().gotoHomePage();
       String groupName = "Test_D";
-      if (app.contact().all().size() == 0) {
+      if (app.db().contacts().size() == 0) {
          if (app.contact().isGroupListEmpty()) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName(groupName).withHeader("TestHeader D").withFooter("TestFooter D"));
@@ -38,11 +33,11 @@ public class ContactDeletionTests extends TestBase {
    @Test
    public void testContactDeletion() {
       app.goTo().gotoHomePage();
-      Contacts before = app.contact().all();
+      Contacts before = app.db().contacts();
       ContactData deletedContact = before.iterator().next();
       app.contact().delete(deletedContact);
       app.goTo().gotoHomePage();
-      Contacts after = app.contact().all();
+      Contacts after = app.db().contacts();
       System.out.println("ContactDeletion");
       System.out.println("after.size(): "+after.size());
       System.out.println("before.size(): "+before.size());

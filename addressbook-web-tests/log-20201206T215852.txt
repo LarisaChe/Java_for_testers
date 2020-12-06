@@ -1,4 +1,0 @@
-5034 [main] INFO  r.s.p.a.tests.GroupCreationTests - Start test testGroupCreation with parameters [GroupData{id='0', name='Test xml G000'}]
-13601 [main] INFO  r.s.p.a.tests.GroupCreationTests - Stop test testGroupCreation
-13601 [main] INFO  r.s.p.a.tests.GroupCreationTests - Start test testGroupCreation with parameters [GroupData{id='0', name='Test xml G1000'}]
-17903 [main] INFO  r.s.p.a.tests.GroupCreationTests - Stop test testGroupCreation

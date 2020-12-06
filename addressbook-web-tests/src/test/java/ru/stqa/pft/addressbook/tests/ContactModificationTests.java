@@ -54,13 +54,13 @@ public class ContactModificationTests extends TestBase {
    @Test
    public void testContactModification1() {
       app.goTo().gotoHomePage();
-      Contacts before = app.contact().all();
+      Contacts before = app.db().contacts();
       ContactData modifiedContact = before.iterator().next();
       contact.withId(modifiedContact.getId());
       app.contact().modify(modifiedContact.getId(), contact);
       app.goTo().gotoHomePage();
 
-      Contacts after = app.contact().all();
+      Contacts after = app.db().contacts();
       System.out.println("ContactModification1");
       System.out.println("after.size(): "+after.size());
       System.out.println("before.size(): "+before.size());
@@ -72,15 +72,14 @@ public class ContactModificationTests extends TestBase {
    @Test
    public void testContactModification2() {
       app.goTo().gotoHomePage();
-      Contacts before = app.contact().all();
-
+      Contacts before = app.db().contacts();
       ContactData modifiedContact = before.iterator().next();
       contact.withId(modifiedContact.getId());
       app.contact().view(modifiedContact.getId());
       app.contact().modifyOnViewPage(contact);
 
       app.goTo().gotoHomePage();
-      Contacts after = app.contact().all();
+      Contacts after = app.db().contacts();
       System.out.println("ContactModification2");
       System.out.println("after.size(): "+after.size());
       System.out.println("before.size(): "+before.size());
@@ -91,14 +90,14 @@ public class ContactModificationTests extends TestBase {
    @Test
    public void testAddContactToGroup() {
       app.goTo().gotoHomePage();
-      Contacts before = app.contact().all();
+      Contacts before = app.db().contacts();
 
       ContactData modifiedContact = before.iterator().next();
       app.contact().selectContact(modifiedContact.getId());
       app.contact().addToFirstGroupInList();
 
       app.goTo().gotoHomePage();
-      Contacts after = app.contact().all();
+      Contacts after = app.db().contacts();
       System.out.println("ContactAddContactToGroups");
       System.out.println("after.size(): "+after.size());
       System.out.println("before.size(): "+before.size());

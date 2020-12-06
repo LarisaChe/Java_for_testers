@@ -1,2 +1,0 @@
-5497 [main] INFO  r.s.p.a.tests.GroupCreationTests - Start test testGroupModification with parameters []
-5507 [main] INFO  r.s.p.a.tests.GroupCreationTests - Stop test testGroupModification

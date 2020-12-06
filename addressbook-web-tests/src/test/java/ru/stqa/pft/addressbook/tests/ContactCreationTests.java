@@ -27,7 +27,8 @@ public class ContactCreationTests extends TestBase {
    @BeforeMethod
    public void ensurePreconditions() {
       app.goTo().gotoHomePage();
-      if (app.contact().isGroupListEmpty()) {
+      //if (app.contact().isGroupListEmpty()) {
+      if (app.db().contacts().size() == 0) {
          app.goTo().groupPage();
          app.group().create(new GroupData().withName(groupName).withHeader("TestHeader Cr").withFooter("TestFooter Cr"));
          app.goTo().gotoHomePage();
@@ -61,13 +62,13 @@ public class ContactCreationTests extends TestBase {
    @Test (dataProvider = "validContacts")
    public void testContactCreationWithDataProvider(ContactData contact) throws Exception {
       app.goTo().gotoHomePage();
-      Contacts before = app.contact().all();
-
+      //Contacts before = app.contact().all();
+      Contacts before = app.db().contacts();
       app.contact().create(contact, true);
 
       app.goTo().gotoHomePage();
 
-      Contacts after = app.contact().all();
+      Contacts after = app.db().contacts();
       System.out.println("ContactCreation");
       System.out.println("after.size(): "+after.size());
       System.out.println("before.size(): "+before.size());

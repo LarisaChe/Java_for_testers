@@ -4,3 +4,4 @@ build/
 gradle-app.setting
 
 !gradle-wrapper.jar
+*.txt

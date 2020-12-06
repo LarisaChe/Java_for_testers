@@ -10,7 +10,10 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
+import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
@@ -37,6 +40,15 @@ public class DbHelper {
       session.getTransaction().commit();
       session.close();
       return new Groups(result);
+   }
+
+   public Contacts contacts() {
+      Session session = sessionFactory.openSession();
+      session.beginTransaction();
+      List<ContactData> result = session.createQuery("from ContactData where deprecated='0000-00-00'" ).list();
+      session.getTransaction().commit();
+      session.close();
+      return new Contacts(result);
    }
 
 }
