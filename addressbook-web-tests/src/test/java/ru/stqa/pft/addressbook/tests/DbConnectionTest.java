@@ -1,5 +1,6 @@
 package ru.stqa.pft.addressbook.tests;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -20,7 +21,7 @@ public class DbConnectionTest {
 
    @Test
    public void testDbConnection() {
-
+      System.out.println(new File(".").getAbsolutePath());
       Connection conn = null;
 
       try {
