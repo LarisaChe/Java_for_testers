@@ -28,6 +28,7 @@ public class ApplicationManager  {
    private GroupHelper groupHelper;
    private WebDriver wd;
    private String browser;
+   private DbHelper dbHelper;
 
    public ApplicationManager(String browser) {
       this.browser = browser;
@@ -36,7 +37,8 @@ public class ApplicationManager  {
 
    public void init() throws IOException {
       String target = System.getProperty("target", "local");
-      properties.load(new FileReader(new File(String.format("src/test/resource/%s.properties", target))));
+      properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+      dbHelper = new DbHelper();
 
       if (browser.equals(BrowserType.FIREFOX)) {
         wd = new FirefoxDriver();
@@ -54,6 +56,7 @@ public class ApplicationManager  {
       sessionHelper = new SessionHelper(wd);
       //sessionHelper.login("admin", "secret");
       sessionHelper.login(properties.getProperty("web.adminLogin"),properties.getProperty("web.adminPassword"));
+
    }
 
    public String formatDataForGroup() {
@@ -61,7 +64,7 @@ public class ApplicationManager  {
    }
 
    public  String fileDataForGroup() {
-      return "src/test/resource/"+properties.getProperty("data.fileForGroup");
+      return "src/test/resources/"+properties.getProperty("data.fileForGroup");
    }
 
    public String formatDataForContact() {
@@ -69,7 +72,7 @@ public class ApplicationManager  {
    }
 
    public  String fileDataForContact() {
-      return "src/test/resource/"+properties.getProperty("data.fileForContact");
+      return "src/test/resources/"+properties.getProperty("data.fileForContact");
    }
 
    public void stop() {
@@ -85,4 +88,6 @@ public class ApplicationManager  {
    }
 
    public ContactHelper contact() { return contactHelper; }
+
+   public DbHelper db() { return dbHelper;}
 }

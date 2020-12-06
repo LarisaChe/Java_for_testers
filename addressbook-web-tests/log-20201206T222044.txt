@@ -1,0 +1,2 @@
+4953 [main] INFO  r.s.p.a.tests.GroupCreationTests - Start test testGroupModification with parameters []
+4968 [main] INFO  r.s.p.a.tests.GroupCreationTests - Stop test testGroupModification
