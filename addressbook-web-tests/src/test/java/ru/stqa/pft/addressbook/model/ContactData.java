@@ -3,40 +3,83 @@ package ru.stqa.pft.addressbook.model;
 import java.io.File;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Type;
+
 import com.google.gson.annotations.Expose;
 
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
+   @Id
+   @Column(name = "id")
    private int id;
    @Expose
+   @Column(name = "firstname")
    private  String firstname;
    @Expose
+   @Column(name = "middlename")
    private  String middlename;
    @Expose
+   @Column(name = "lastname")
    private  String lastname;
-
+   @Column(name = "title")
    private  String title;
    @Expose
+   @Column(name = "nickname")
    private  String nickname;
+   @Column(name = "company")
    private  String company;
    @Expose
+   @Column(name = "address")
+   @Type(type = "text")
    private  String address;
+   @Column(name = "home")
+   @Type(type = "text")
    private  String homePhone;
    @Expose
+   @Column(name = "mobile")
+   @Type(type = "text")
    private  String mobilePhone;
+   @Column(name = "work")
+   @Type(type = "text")
    private  String workPhone;
    @Expose
+   @Column(name = "email")
+   @Type(type = "text")
    private  String email;
+   @Column(name = "email2")
+   @Type(type = "text")
    private  String email2;
+   @Column(name = "email3")
+   @Type(type = "text")
    private  String email3;
+   @Column(name = "bday", columnDefinition = "tinyint")
    private  String bday;
+   @Column(name = "bmonth")
    private  String bmonth;
+   @Column(name = "byear")
    private  String byear;
+   @Column(name = "address2")
+   @Type(type = "text")
    private  String address2;
+   @Column(name = "notes")
+   @Type(type = "text")
    private  String notes;
+   @Transient
    private String group;
+   @Transient
    private String allPhones;
+   @Transient
    private String allEmails;
-   private File photo;
+   @Column(name = "photo")
+   @Type(type = "text")
+   private String photo;
 
    public int getId() {
       return id;
@@ -254,10 +297,10 @@ public class ContactData {
        return this;
    }
 
-   public File getPhoto() { return photo; }
+   public File getPhoto() { return new File(photo); }
 
    public ContactData withPhoto(File photo) {
-      this.photo = photo;
+      this.photo = photo.getPath();
       return this;
    }
 }
