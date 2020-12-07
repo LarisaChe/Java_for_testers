@@ -47,7 +47,7 @@ public class ContactModificationTests extends TestBase {
          groupName = app.contact().groupNameFirstInList();
       }
       if (app.contact().all().size() == 0) {
-         app.contact().create(new ContactData().withFirstname("Contact test m").withMiddlename("test m").withLastname("test m").withGroup(groupName), true);
+         app.contact().create(new ContactData().withFirstname("Contact test m").withMiddlename("test m").withLastname("test m"), true); //.withGroup(groupName)
       }
    }
 

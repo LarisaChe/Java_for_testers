@@ -50,8 +50,9 @@ public class ContactHelper extends HelperBase {
       type(By.name("byear"),contactData.getByear());
       //wd.findElement(By.xpath("(//option[@value='2'])[3]")).click();
       if (creation) {
-         if (contactData.getGroup() != null) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+         if (contactData.getGroups().size() > 0) {
+            Assert.assertTrue(contactData.getGroups().size() == 1);
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
          }
       } else {
          Assert.assertFalse(isElementPresent(By.name("new_group")));

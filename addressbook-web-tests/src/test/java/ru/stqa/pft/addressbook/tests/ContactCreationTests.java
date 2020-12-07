@@ -102,8 +102,8 @@ public class ContactCreationTests extends TestBase {
            .withByear("1991")
            .withAddress2("Москва, Сосновая ул. 3-205")
            .withNotes("Новый пользователь")
-           .withPhoto(photo)
-           .withGroup(groupName);
+           .withPhoto(photo);
+           //.withGroup(groupName);
 
       app.contact().create(contact, true);
 

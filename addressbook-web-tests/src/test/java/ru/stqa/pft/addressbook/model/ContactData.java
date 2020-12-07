@@ -1,11 +1,17 @@
 package ru.stqa.pft.addressbook.model;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -72,14 +78,18 @@ public class ContactData {
    @Type(type = "text")
    private  String notes;
    @Transient
-   private String group;
-   @Transient
    private String allPhones;
    @Transient
    private String allEmails;
    @Column(name = "photo")
    @Type(type = "text")
    private String photo;
+
+   /* @Transient
+   private String group; */
+   @ManyToMany(fetch = FetchType.EAGER)
+   @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name="group_id"))
+   private Set<GroupData> groups= new HashSet<GroupData>();
 
    public int getId() {
       return id;
@@ -218,11 +228,6 @@ public class ContactData {
       return this;
    }
 
-   public ContactData withGroup(String group) {
-      this.group = group;
-      return this;
-   }
-
    public String getMiddlename() {
       return middlename;
    }
@@ -283,8 +288,17 @@ public class ContactData {
       return notes;
    }
 
+  /* // контакт может быть ассоциирован не с одной группой, а с нескольски ми
    public String getGroup() {
       return group;
+   }
+   public ContactData withGroup(String group) {
+      this.group = group;
+      return this;
+   } */
+
+   public Groups getGroups() {
+      return new Groups(groups);
    }
 
    public String getAllPhones() { return allPhones; }

@@ -26,7 +26,7 @@ public class ContactDeletionTests extends TestBase {
             groupName = app.contact().groupNameFirstInList();
          }
          app.contact().create(new ContactData().withFirstname("Contact test d").withMiddlename("test d").withLastname("test d")
-                                               .withBday("5").withBmonth("May").withByear("2000").withGroup(groupName), true);
+                                               .withBday("5").withBmonth("May").withByear("2000"), true); //.withGroup(groupName)
       }
    }
 

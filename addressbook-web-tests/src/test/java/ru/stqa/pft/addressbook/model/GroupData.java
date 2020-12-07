@@ -1,10 +1,13 @@
 package ru.stqa.pft.addressbook.model;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -32,6 +35,13 @@ public class GroupData {
    @Column(name="group_footer")
    @Type(type = "text")
    private String footer;
+
+   @ManyToMany (mappedBy = "groups")
+   private Set<ContactData> contacts = new HashSet<ContactData>();
+
+   public Contacts getContacts() {
+      return new Contacts(contacts);
+   }
 
   /* public GroupData(int id, String name, String header, String footer) {
       this.id = id;
