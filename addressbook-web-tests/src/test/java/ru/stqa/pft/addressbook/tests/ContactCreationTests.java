@@ -116,7 +116,8 @@ public class ContactCreationTests extends TestBase {
       System.out.println("before.size(): "+before.size());
       assertEquals(after.size(), before.size() + 1);
       // assertThat(after.size(), equalTo(before.size() + 1));
-      assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+     // assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+      verifyContactListInUI();
    }
 
 
