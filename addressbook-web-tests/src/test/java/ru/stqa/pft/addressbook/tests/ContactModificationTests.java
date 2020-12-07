@@ -67,6 +67,7 @@ public class ContactModificationTests extends TestBase {
       assertEquals(after.size(), before.size());
 
       assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact))); //ff
+      verifyContactListInUI();
    }
 
    @Test
@@ -85,6 +86,7 @@ public class ContactModificationTests extends TestBase {
       System.out.println("before.size(): "+before.size());
       assertEquals(after.size(), before.size());
       assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
+      verifyContactListInUI();
    }
 
    @Test
@@ -103,5 +105,6 @@ public class ContactModificationTests extends TestBase {
       System.out.println("before.size(): "+before.size());
       assertEquals(after.size(), before.size());
       assertThat(after, equalTo(before));
+      verifyContactListInUI();
    }
 }
