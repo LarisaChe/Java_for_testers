@@ -19,6 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 public class ContactCreationTests extends TestBase {
 
@@ -27,13 +28,13 @@ public class ContactCreationTests extends TestBase {
    @BeforeMethod
    public void ensurePreconditions() {
       app.goTo().gotoHomePage();
-      //if (app.contact().isGroupListEmpty()) {
-      if (app.db().contacts().size() == 0) {
+      if (app.db().groups().size() == 0) {
          app.goTo().groupPage();
          app.group().create(new GroupData().withName(groupName).withHeader("TestHeader Cr").withFooter("TestFooter Cr"));
          app.goTo().gotoHomePage();
       } else {
-         groupName = app.contact().groupNameFirstInList();
+         //groupName = app.contact().groupNameFirstInList();
+         groupName = app.db().groups().iterator().next().getName();
       }
    }
 
@@ -59,7 +60,7 @@ public class ContactCreationTests extends TestBase {
       }
    }
 
-   @Test (dataProvider = "validContacts")
+   @Test (enabled = false) //(dataProvider = "validContacts")
    public void testContactCreationWithDataProvider(ContactData contact) throws Exception {
       app.goTo().gotoHomePage();
       //Contacts before = app.contact().all();
@@ -78,10 +79,10 @@ public class ContactCreationTests extends TestBase {
       verifyContactListInUI();
    }
 
-
-   @Test (enabled = false)
+   @Test //(enabled = false)
    public void testContactCreation() throws Exception {
       app.goTo().gotoHomePage();
+      Groups groups = app.db().groups();
       Contacts before = app.contact().all();
 
       File photo = new File("src/test/resource/fluke.png");
@@ -102,8 +103,8 @@ public class ContactCreationTests extends TestBase {
            .withByear("1991")
            .withAddress2("Москва, Сосновая ул. 3-205")
            .withNotes("Новый пользователь")
-           .withPhoto(photo);
-           //.withGroup(groupName);
+           .withPhoto(photo)
+           .inGroup(groups.iterator().next());
 
       app.contact().create(contact, true);
 
@@ -117,6 +118,7 @@ public class ContactCreationTests extends TestBase {
       // assertThat(after.size(), equalTo(before.size() + 1));
       assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
    }
+
 
    /*public void testCurrentDir() {
       File currentDir = new File(".");

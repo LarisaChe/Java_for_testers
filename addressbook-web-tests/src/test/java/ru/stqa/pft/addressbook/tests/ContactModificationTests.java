@@ -51,7 +51,7 @@ public class ContactModificationTests extends TestBase {
       }
    }
 
-   @Test
+   @Test (enabled = false)
    public void testContactModification1() {
       app.goTo().gotoHomePage();
       Contacts before = app.db().contacts();
@@ -70,7 +70,7 @@ public class ContactModificationTests extends TestBase {
       verifyContactListInUI();
    }
 
-   @Test
+   @Test (enabled = false)
    public void testContactModification2() {
       app.goTo().gotoHomePage();
       Contacts before = app.db().contacts();
