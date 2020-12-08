@@ -60,7 +60,7 @@ public class ContactCreationTests extends TestBase {
       }
    }
 
-   @Test (enabled = false) //(dataProvider = "validContacts")
+   @Test (dataProvider = "validContacts")
    public void testContactCreationWithDataProvider(ContactData contact) throws Exception {
       app.goTo().gotoHomePage();
       //Contacts before = app.contact().all();
@@ -83,9 +83,9 @@ public class ContactCreationTests extends TestBase {
    public void testContactCreation() throws Exception {
       app.goTo().gotoHomePage();
       Groups groups = app.db().groups();
-      Contacts before = app.contact().all();
+      Contacts before = app.db().contacts();  //app.contact().all();
 
-      File photo = new File("src/test/resource/fluke.png");
+      File photo = new File("src/test/resources/fluke.png");
       ContactData contact = new ContactData()
            .withFirstname("Антоний")
            .withMiddlename("Васильевич")
@@ -110,13 +110,17 @@ public class ContactCreationTests extends TestBase {
 
       app.goTo().gotoHomePage();
 
-      Contacts after = app.contact().all();
+      Contacts after = app.db().contacts();  //app.contact().all();
       System.out.println("ContactCreation");
       System.out.println("after.size(): "+after.size());
       System.out.println("before.size(): "+before.size());
+      logger.info("before: ");
+      logger.info(before.toString());
+      logger.info("after: ");
+      logger.info(after.toString());
       assertEquals(after.size(), before.size() + 1);
       // assertThat(after.size(), equalTo(before.size() + 1));
-     // assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+      assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
       verifyContactListInUI();
    }
 

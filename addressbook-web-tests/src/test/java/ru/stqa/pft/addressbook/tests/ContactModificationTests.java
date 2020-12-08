@@ -39,12 +39,14 @@ public class ContactModificationTests extends TestBase {
    @BeforeMethod
    public void ensurePreconditions() {
       app.goTo().gotoHomePage();
-      if (app.contact().isGroupListEmpty()) {
+      //if (app.contact().isGroupListEmpty()) {
+      if (app.db().contacts().size() == 0 ) {
          app.goTo().groupPage();
          app.group().create(new GroupData().withName(groupName).withHeader("TestHeader A").withFooter("TestFooter A"));
          app.goTo().gotoHomePage();
       } else {
-         groupName = app.contact().groupNameFirstInList();
+         //groupName = app.contact().groupNameFirstInList();
+         groupName = app.db().groups().iterator().next().getName();
       }
       if (app.contact().all().size() == 0) {
          app.contact().create(new ContactData().withFirstname("Contact test m").withMiddlename("test m").withLastname("test m"), true); //.withGroup(groupName)
