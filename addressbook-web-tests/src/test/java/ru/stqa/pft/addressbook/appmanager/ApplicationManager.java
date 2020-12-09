@@ -75,6 +75,8 @@ public class ApplicationManager  {
       return "src/test/resources/"+properties.getProperty("data.fileForContact");
    }
 
+   public int groupsCount() {return Integer.parseInt(properties.getProperty("groups.count"));}
+
    public void stop() {
       wd.quit();
    }

@@ -39,8 +39,8 @@ public class DbHelper {
       List<GroupData> result = session.createQuery("from GroupData" ).list();
       session.getTransaction().commit();
       session.close();
-      System.out.println("groups (result): ");
-      System.out.println(result);
+      //System.out.println("groups (result): ");
+      //System.out.println(result);
       return new Groups(result);
    }
 
@@ -50,9 +50,19 @@ public class DbHelper {
       List<ContactData> result = session.createQuery("from ContactData where deprecated='0000-00-00'" ).list();
       session.getTransaction().commit();
       session.close();
-      System.out.println("contacts (result): ");
-      System.out.println(result);
+      //System.out.println("contacts (result): ");
+      //System.out.println(result);
       return new Contacts(result);
    }
 
+   public ContactData contact(int id) {
+      Session session = sessionFactory.openSession();
+      session.beginTransaction();
+      List<ContactData> result = session.createQuery(String.format("from ContactData where deprecated='0000-00-00' and id=%s", id) ).list();
+      session.getTransaction().commit();
+      session.close();
+      //System.out.println("contacts (result): ");
+      //System.out.println(result);
+      return new Contacts(result).iterator().next();
+   }
 }

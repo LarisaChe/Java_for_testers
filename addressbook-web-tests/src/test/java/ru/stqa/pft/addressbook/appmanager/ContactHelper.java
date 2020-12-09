@@ -27,7 +27,9 @@ public class ContactHelper extends HelperBase {
       type(By.name("middlename"), contactData.getMiddlename());
       type(By.name("lastname"), contactData.getLastname());
       type(By.name("nickname"), contactData.getNickname());
-      attach(By.name("photo"), contactData.getPhoto());
+
+       //  attach(By.name("photo"), contactData.getPhoto());
+
 
       type(By.name("title"), contactData.getTitle());
       type(By.name("company"), contactData.getCompany());
@@ -97,7 +99,7 @@ public class ContactHelper extends HelperBase {
       click(By.name("modifiy"));
    }
 
-   public void addToFirstGroupInList() {
+   public void submitAddToGroup() {
       click(By.name("add"));
    }
 
@@ -197,4 +199,30 @@ public class ContactHelper extends HelperBase {
       wd.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[8]/a", id))).click();
    }
 
+   public void selectGroupForAdd(int idGroup) {
+      //'.right option[value='%s']')
+      wd.findElement(By.name("to_group")).click();
+      wd.findElement(By.cssSelector(String.format(".right option[value='%s']",idGroup))).click();
+   }
+
+   public void addToGroup(int idContact, int idGroup) {
+      selectContact(idContact);
+      selectGroupForAdd(idGroup);
+      submitAddToGroup();
+   }
+
+   public void removeFromGroup(int idContact, int idGroup) {
+      selectGroup(idGroup);
+      selectContact(idContact);
+      submitRemoveFromGroup();
+   }
+
+   private void submitRemoveFromGroup() {
+      click(By.name("remove"));
+   }
+
+   private void selectGroup(int idGroup) {  //$$("form [name='group'] option[value = '68']")
+      wd.findElement(By.name("group")).click();
+      wd.findElement(By.cssSelector(String.format("form [name='group'] option[value='%s']",idGroup))).click();
+   }
 }

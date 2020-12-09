@@ -98,7 +98,7 @@ public class ContactModificationTests extends TestBase {
 
       ContactData modifiedContact = before.iterator().next();
       app.contact().selectContact(modifiedContact.getId());
-      app.contact().addToFirstGroupInList();
+      app.contact().submitAddToGroup();
 
       app.goTo().gotoHomePage();
       Contacts after = app.db().contacts();
