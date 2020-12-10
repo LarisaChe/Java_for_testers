@@ -6,7 +6,10 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -36,12 +39,15 @@ public class GroupData {
    @Type(type = "text")
    private String footer;
 
-   @ManyToMany (mappedBy = "groups")
+//   @ManyToMany (mappedBy = "groups")
+@ManyToMany(fetch = FetchType.EAGER)
+@JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name="id"))
    private Set<ContactData> contacts = new HashSet<ContactData>();
 
    public Contacts getContacts() {
       return new Contacts(contacts);
    }
+
 
   /* public GroupData(int id, String name, String header, String footer) {
       this.id = id;

@@ -14,7 +14,7 @@ dependencies {
             'com.google.code.gson:gson:2.8.6',
             'ch.qos.logback:logback-classic:1.1.5',
             'mysql:mysql-connector-java:5.1.49',
-            'org.hibernate:hibernate-core:5.1.0.Final' //core:5.4.25.Final
+            'org.hibernate:hibernate-core:5.4.25.Final' //core:5.4.25.Final 5.1.0
     )
 }
 
@@ -60,5 +60,17 @@ task testAll(type: Test) {
     }
     if (project.hasProperty("verifyUI")) {
         systemProperty 'verifyUI', "${verifyUI}"
+    }
+}
+
+task testContactInOutGroup(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-ContactInOutGroup.xml'
+    }
+    if (project.hasProperty("browser")) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty("target")) {
+        systemProperty 'target', "${target}"
     }
 }
