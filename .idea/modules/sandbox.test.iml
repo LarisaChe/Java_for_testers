@@ -16,5 +16,4 @@
     <orderEntry type="library" name="Gradle: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:guava:19.0" level="project" />
   </component>
-  <component name="TestModuleProperties" production-module="sandbox.main" />
 </module>
