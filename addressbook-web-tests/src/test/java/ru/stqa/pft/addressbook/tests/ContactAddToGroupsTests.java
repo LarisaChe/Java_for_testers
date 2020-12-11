@@ -7,6 +7,7 @@ import static org.testng.Assert.assertEquals;
 import java.time.LocalDateTime;
 
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -14,24 +15,23 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-public class ContactAddToGroupsTests extends TestBase{
+public class ContactAddToGroupsTests extends TestBase {
 
    ContactData contactsWithoutGroups;
 
-   @BeforeClass
+   @BeforeMethod
    public void ensurePreconditions() {
       app.goTo().gotoHomePage();
       if (app.db().contacts().size() == 0) {
          app.contact().create(new ContactData().withFirstname("Contact test Group").withMiddlename("test Group").withLastname("test Group")
                                                .withBday("5").withBmonth("May").withByear("2000"), true);
       }
-         contactsWithoutGroups = app.db().contacts().iterator().next();
+      contactsWithoutGroups = app.db().contacts().iterator().next();
 
-      app.goTo().groupPage();
-      while ((app.db().groups().size()-contactsWithoutGroups.getGroups().size())<= app.groupsCount()) { // групп в которых нет контакта должно быть app.groupsCount() + 1
-         app.group().create(new GroupData().withName("TestGroup "+String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS", LocalDateTime.now()))
-                                           .withHeader("TestHeader A").withFooter("TestFooter A"));
+      if ((app.db().groups().size() == 0) || (contactsWithoutGroups.getGroups().size() == app.db().groups().size())) {
          app.goTo().groupPage();
+         app.group().create(new GroupData().withName("TestGroup " + String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS", LocalDateTime.now()))
+                                           .withHeader("TestHeader A").withFooter("TestFooter A"));
       }
    }
 
@@ -46,7 +46,7 @@ public class ContactAddToGroupsTests extends TestBase{
             groupForContact = group;
          }
       }
-      System.out.println("Выбрана группа: "+groupForContact.getId()+" "+groupForContact.getName());
+      System.out.println("Выбрана группа: " + groupForContact.getId() + " " + groupForContact.getName());
 
       Contacts contactsBefore = app.db().group(groupForContact.getId()).getContacts();
       System.out.println("контакты группы до: ");
@@ -69,6 +69,14 @@ public class ContactAddToGroupsTests extends TestBase{
 
    @Test
    public void testAddContactInSomeGroups() {
+
+      while ((app.db().groups().size() - app.db().contact(contactsWithoutGroups.getId()).getGroups().size())
+             < app.groupsCount()) {
+         app.group().create(new GroupData().withName("TestGroup " + String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS", LocalDateTime.now()))
+                                           .withHeader("TestHeader A").withFooter("TestFooter A"));
+         app.goTo().groupPage();
+      }
+
       Groups groupsAddingToContact = new Groups();
       app.goTo().gotoHomePage();
       Groups before = app.db().contact(contactsWithoutGroups.getId()).getGroups();
@@ -81,7 +89,9 @@ public class ContactAddToGroupsTests extends TestBase{
             app.goTo().gotoHomePage();
             before = before.withAdded(group);
             i++;
-            if (i>=app.groupsCount()) { break;}
+            if (i >= app.groupsCount()) {
+               break;
+            }
          }
       }
       Groups after = app.db().contact(contactsWithoutGroups.getId()).getGroups();
@@ -90,7 +100,7 @@ public class ContactAddToGroupsTests extends TestBase{
       assertThat(after, equalTo(before));
       System.out.println("groupsAddingToContact.size(): " + groupsAddingToContact.size());
       for (GroupData group : groupsAddingToContact) {
-         System.out.println("Проверка группы "+group.getId()+" "+group.getName());
+         System.out.println("Проверка группы " + group.getId() + " " + group.getName());
          assertThat(app.db().group(group.getId()).getContacts().size(), equalTo(group.getContacts().size() + 1));
          assertThat(app.db().group(group.getId()).getContacts(), equalTo(group.getContacts().withAdded(contactsWithoutGroups)));
       }
