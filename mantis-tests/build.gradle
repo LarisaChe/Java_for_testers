@@ -9,10 +9,11 @@ dependencies {
             'org.seleniumhq.selenium:selenium-java:3.141.59',
             'org.testng:testng:7.0.0',
             'org.hamcrest:hamcrest:2.2',
+            'org.apache.httpcomponents:httpclient:4.5.13'
     )
 }
 
-task testM(type: Test) {
+test {
         useTestNG {
             suites 'src/test/resources/testng.xml'
         }
