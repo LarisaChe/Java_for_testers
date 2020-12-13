@@ -6,4 +6,9 @@
             <class name="ru.stqa.pft.mantis.tests.LoginTests" />
         </classes>
     </test>
+    <test name="Registration">
+        <classes>
+            <class name="ru.stqa.pft.mantis.tests.RegistrationTests" />
+        </classes>
+    </test>
 </suite>

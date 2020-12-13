@@ -7,6 +7,7 @@ public class RegistrationTests extends TestBase {
    @Test
    public void testRegistration() {
       app.registration().start("us", "us@m.r");
+
    }
 
 }
