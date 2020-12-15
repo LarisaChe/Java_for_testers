@@ -11,11 +11,6 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
-/**
- * Description.
- *
- * @author lchernaya
- */
 public class ContactHelper extends HelperBase {
 
    public ContactHelper(WebDriver wd) {

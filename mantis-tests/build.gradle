@@ -1,5 +1,8 @@
 apply plugin: 'java'
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 /*repositories {
     mavenCentral()
 }*/
@@ -18,7 +21,8 @@ dependencies {
 }
 
 test {
-        useTestNG {
+    systemProperty "file.encoding", "utf-8"
+    useTestNG {
             suites 'src/test/resources/testng.xml'
         }
     if (project.hasProperty("browser")) {

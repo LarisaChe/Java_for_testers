@@ -11,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
-
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ApplicationManager {
 
@@ -21,6 +21,9 @@ public class ApplicationManager {
    public RegistrationHelper registrationHelper;
    private FtpHelper ftp;
    private MailHelper mailHelper;
+   private UISessionHelper uiSessionHelper;
+   private UserHelper userHelper;
+   public WebDriverWait wdwait;
 
    public ApplicationManager(String browser) {
       this.browser = browser;
@@ -53,6 +56,19 @@ public class ApplicationManager {
       return registrationHelper;
    }
 
+   public UISessionHelper uiSession() {
+      if (uiSessionHelper == null) {
+         uiSessionHelper = new UISessionHelper(this);
+      }
+      return uiSessionHelper;
+   }
+   public UserHelper user() {
+      if (userHelper == null) {
+         userHelper = new UserHelper(this);
+      }
+      return userHelper;
+   }
+
    public WebDriver getDriver() {
       if (wd == null) {
          if (browser.equals(BrowserType.FIREFOX)) {
@@ -65,6 +81,7 @@ public class ApplicationManager {
          wd.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
          wd.get(properties.getProperty("web.baseUrl"));
       }
+      wdwait = new WebDriverWait(wd, 5000);
       return wd;
    }
 
