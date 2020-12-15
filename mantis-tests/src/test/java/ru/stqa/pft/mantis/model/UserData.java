@@ -12,8 +12,7 @@ public class UserData {
    private  String role;
    private boolean active;
 
-   public UserData(int id, String login, String name, String email, String role, boolean active) {
-   }
+  // public UserData(int id, String login, String name, String email, String role, boolean active) {}
 
    public int getId() {
       return id;

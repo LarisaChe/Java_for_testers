@@ -18,17 +18,18 @@ public class UserHelper extends HelperBase {
    public List<UserData> getUserList() {
       List<UserData> users = new ArrayList<UserData>();
       List<WebElement> elements = wd.findElements(By.cssSelector("table tbody tr"));
-      int i = ("manage_user_edit_page.php?user_id=").length();
+      int i = (app.getProperty("web.baseUrl")+"/manage_user_edit_page.php?user_id=").length(); //http://localhost/mantisbt-2.24.3/manage_user_edit_page.php?user_id=1
       String str;
       for(WebElement e : elements) {
          str = e.findElements(By.tagName("td")).get(0).findElement(By.cssSelector("a")).getAttribute("href");
+        // System.out.println(str);
          int id = Integer.parseInt(str.substring(i));
          String login = e.findElements(By.tagName("td")).get(0).getText();
          String name = e.findElements(By.tagName("td")).get(1).getText();
          String email = e.findElements(By.tagName("td")).get(2).getText();
          String role = e.findElements(By.tagName("td")).get(3).getText();
          boolean active = e.findElements(By.tagName("td")).get(4).findElement(By.cssSelector(".fa-lg")).isDisplayed();
-         UserData user = new UserData(id, login, name, email, role, active);
+         UserData user = new UserData().withId(id).withUser(login).withName(name).withEmail(email).withRole(role).withActive(active);
          users.add(user);
       }
       return users;
@@ -36,8 +37,9 @@ public class UserHelper extends HelperBase {
 
    public UserData getNonAdminActiveUser() {
       List<UserData> users = getUserList();
+ System.out.println(users.toString());
       for (UserData user : users) {
-         if ((user.getActive()) && !(user.getRole().equals("администратор"))) {
+         if ((user.getActive()) && !(user.getRole().equals("администратор")||user.getRole().equals("administrator"))) {
             return user;
          }
       }

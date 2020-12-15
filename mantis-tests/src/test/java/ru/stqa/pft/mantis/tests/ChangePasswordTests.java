@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -26,15 +27,14 @@ public class ChangePasswordTests extends TestBase{
    public void testChangePassword() throws IOException, MessagingException {
       String password = "change";
       app.uiSession().loginUI(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"));
-      app.uiSession().menuItem("Управление").click();
-      app.uiSession().menuItem("Управление пользователями").click();
+      app.uiSession().menuManage();
+      app.uiSession().tabManageUser();
       UserData user = app.user().getNonAdminActiveUser();
       app.uiSession().openCard(user.getId());
-      app.uiSession().clickButton("Сбросить пароль");
+      app.uiSession().clickBtnResetPassword();
 
-      List<MailMessage> mailMessages =  app.mail().waitForMail(2, 10000);
+      List<MailMessage> mailMessages =  app.mail().waitForMail(1, 10000);
       String confirmationLink = findConfirmationLink(mailMessages, user.getEmail());
-     // app.registration().finish(confirmationLink, user, password);
       app.registration().finish(confirmationLink, password);
       Assert.assertTrue(app.newSession().login(user.getLogin(), password));
    }

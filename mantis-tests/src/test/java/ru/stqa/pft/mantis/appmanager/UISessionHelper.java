@@ -12,11 +12,7 @@ import ru.stqa.pft.mantis.model.UserData;
 
 public class UISessionHelper extends HelperBase {
 
-   //private WebDriver wd;
-   //WebDriverWait wait;
-
    public UISessionHelper(ApplicationManager app) {
-     // this.wd = wd;
       super(app);
    }
 
@@ -27,35 +23,24 @@ public class UISessionHelper extends HelperBase {
       app.wdwait.until(ExpectedConditions.urlContains("login_password_page.php")); //presenceOfElementLocated(By.name("password")));
       type (By.name("password"), password);
       click(By.cssSelector("input[type='submit'].btn"));
-      //click(By.xpath("//input[@type='submit']"));
       app.wdwait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".menu-text")));
    }
 
-   public WebElement menuItem (String menuName) {
-      return findElement(By.cssSelector(".menu-text"), menuName, "menu");
+   public void tabManageUser () {
+      click(By.cssSelector("[href='/mantisbt-2.24.3/manage_user_page.php']"));
    }
 
-   public WebElement tabItem (String tabName) {
-      return findElement(By.cssSelector(".row ul.nav li a"), tabName, "tabs");
-   }
-
-   private WebElement findElement (By locator, String itemName, String itemType) {
-      List<WebElement> tabItems = wd.findElements(locator);
-      for (WebElement e : tabItems) {
-         if (e.getText().trim().equals(itemName)) {
-            return e;
-         }
-      }
-      System.out.println(String.format("The '%s' item don't find in %s!", itemName, itemType));
-      return null;
+   public void menuManage () {
+      click(By.cssSelector(".fa-gears"));
    }
 
    public void openCard(int userId) {
-      click(By.cssSelector(String.format("[href='manage_user_edit_page.php?user_id=%s']")));
+      click(By.cssSelector(String.format("[href='manage_user_edit_page.php?user_id=%s']", userId)));
    }
 
-   public void clickButton(String buttonName) {
-      click(By.cssSelector(String.format("span input[value = '%s']",buttonName)));
+   public void clickBtnResetPassword() {
+      click(By.cssSelector("#manage-user-reset-form"));
+      app.wdwait.until(ExpectedConditions.stalenessOf(wd.findElement(By.cssSelector(".alert"))));
    }
 
    /*  public void logoutUI() {
