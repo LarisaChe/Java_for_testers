@@ -11,7 +11,7 @@ $g_phpMailer_method = PHPMAILER_METHOD_SMTP;
 
 /*$g_smtp_host = 'mx.test.masterdm.ru';*/
 $g_smtp_host = 'localhost';
-$g_smtp_port = 25;
+$g_smtp_port = 4555;
 
 /*$g_smtp_username = 'test1@test.masterdm.ru';*/
 

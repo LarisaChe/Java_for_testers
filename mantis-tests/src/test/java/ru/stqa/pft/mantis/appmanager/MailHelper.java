@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -35,7 +36,7 @@ public class MailHelper {
       throw new Error("No mail :(");
    }
 
-   public static MailMessage toModelMail(WiserMessage m) {
+    public static MailMessage toModelMail(WiserMessage m) {
       try {
          MimeMessage mm = m.getMimeMessage();
          return new MailMessage(mm.getAllRecipients()[0].toString(), (String) mm.getContent()) ;
