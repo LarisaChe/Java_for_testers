@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "GetLocationResponse")
 public class GetLocationResponse {
 
-    @XmlElement(name = "GetLocationResult")
+    @XmlElement(name = "getLocationResult")
     protected String getLocationResult;
 
     /**
