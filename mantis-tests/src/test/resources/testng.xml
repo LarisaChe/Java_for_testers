@@ -16,4 +16,9 @@
             <class name="ru.stqa.pft.mantis.tests.ChangePasswordTests" />
         </classes>
     </test>
+    <test name="Soap">
+        <classes>
+            <class name="ru.stqa.pft.mantis.tests.SoapTests" />
+        </classes>
+    </test>
 </suite>
