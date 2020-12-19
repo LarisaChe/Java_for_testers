@@ -23,13 +23,15 @@ public class RegistrationTests extends TestBase {
    @Test
    public void testRegistration() throws IOException, MessagingException {
       long now = System.currentTimeMillis();
-      String email = String.format("us_%s@mail.ru", now);
+     // String email = String.format("us_%s@mail.ru", now); //для локальной почты
+      String email = String.format("us_%s@localhost", now); // для james
       String user = String.format("us_%s", now);
       String password = "password";
       app.james().createUser(user, password);
       app.registration().start(user, email);
-      //List<MailMessage> mailMessages =  app.mail().waitForMail(2, 10000);
-      List<MailMessage> mailMessages =  app.james().waitForMail(user, password,60000);
+      System.out.println("Старт сделали");
+      //List<MailMessage> mailMessages =  app.mail().waitForMail(2, 10000);   //для локальной почты
+      List<MailMessage> mailMessages =  app.james().waitForMail(user, password,60000);  // для james
       String confirmationLink = findConfirmationLink(mailMessages, email);
       app.registration().finish(confirmationLink, password);
       Assert.assertTrue(app.newSession().login(user, password));

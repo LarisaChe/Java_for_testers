@@ -11,7 +11,7 @@ $g_phpMailer_method = PHPMAILER_METHOD_SMTP;
 
 /*$g_smtp_host = 'mx.test.masterdm.ru';*/
 $g_smtp_host = 'localhost';
-$g_smtp_port = 4555;
+/*$g_smtp_port = 4555;*/
 
 /*$g_smtp_username = 'test1@test.masterdm.ru';*/
 
@@ -27,3 +27,4 @@ $g_log_destination = 'file:d:/temp/mantisbt.log';
 
 $g_enable_email_notification = ON;
 $g_send_reset_password = ON;
+

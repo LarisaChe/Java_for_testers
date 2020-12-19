@@ -5,6 +5,7 @@
     <file type="web" url="file://$PROJECT_DIR$/addressbook-web-tests" />
     <file type="web" url="file://$PROJECT_DIR$/mantis-tests" />
     <file type="web" url="file://$PROJECT_DIR$/sandbox" />
+    <file type="web" url="file://$PROJECT_DIR$/soap_sample" />
   </component>
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
