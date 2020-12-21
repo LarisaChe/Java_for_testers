@@ -4,6 +4,10 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.testng.Assert.*;
 
+import java.io.IOException;
+
+import org.testng.SkipException;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -11,11 +15,6 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-/**
- * Description.
- *
- * @author lchernaya
- */
 public class ContactModificationTests extends TestBase {
    String groupName = "Test_M";
    ContactData contact = new ContactData()
@@ -36,6 +35,11 @@ public class ContactModificationTests extends TestBase {
         .withAddress2("Москва, Сосновая ул. 205-3")
         .withNotes("Модифицированный пользователь");
 
+ /*  @BeforeClass
+   public void initRest() {
+      app.rest().init();
+   } */
+
    @BeforeMethod
    public void ensurePreconditions() {
       app.goTo().gotoHomePage();
@@ -53,26 +57,31 @@ public class ContactModificationTests extends TestBase {
       }
    }
 
-   @Test (enabled = false)
-   public void testContactModification1() {
-      app.goTo().gotoHomePage();
-      Contacts before = app.db().contacts();
-      ContactData modifiedContact = before.iterator().next();
-      contact.withId(modifiedContact.getId());
-      app.contact().modify(modifiedContact.getId(), contact);
-      app.goTo().gotoHomePage();
+   @Test
+   public void testContactModification1() throws IOException {
+      try {
+         skipIfNotFixed(369);
+         app.goTo().gotoHomePage();
+         Contacts before = app.db().contacts();
+         ContactData modifiedContact = before.iterator().next();
+         contact.withId(modifiedContact.getId());
+         app.contact().modify(modifiedContact.getId(), contact);
+         app.goTo().gotoHomePage();
 
-      Contacts after = app.db().contacts();
-      System.out.println("ContactModification1");
-      System.out.println("after.size(): "+after.size());
-      System.out.println("before.size(): "+before.size());
-      assertEquals(after.size(), before.size());
+         Contacts after = app.db().contacts();
+         System.out.println("ContactModification1");
+         System.out.println("after.size(): " + after.size());
+         System.out.println("before.size(): " + before.size());
+         assertEquals(after.size(), before.size());
 
-      assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact))); //ff
-      verifyContactListInUI();
+         assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact))); //ff
+         verifyContactListInUI();
+      } catch (SkipException e) {
+         e.printStackTrace();
+      }
    }
 
-   @Test (enabled = false)
+   @Test
    public void testContactModification2() {
       app.goTo().gotoHomePage();
       Contacts before = app.db().contacts();

@@ -29,6 +29,7 @@ public class ApplicationManager  {
    private WebDriver wd;
    private String browser;
    private DbHelper dbHelper;
+   private RestHelper restHelper;
 
    public ApplicationManager(String browser) {
       this.browser = browser;
@@ -57,6 +58,10 @@ public class ApplicationManager  {
       //sessionHelper.login("admin", "secret");
       sessionHelper.login(properties.getProperty("web.adminLogin"),properties.getProperty("web.adminPassword"));
 
+   }
+
+   public String getProperty(String key) {
+      return properties.getProperty(key);
    }
 
    public String formatDataForGroup() {
@@ -92,4 +97,11 @@ public class ApplicationManager  {
    public ContactHelper contact() { return contactHelper; }
 
    public DbHelper db() { return dbHelper;}
+
+   public RestHelper rest() {
+     /* if (restHelper == null) {
+         restHelper = new RestHelper(this);
+      } */
+      return restHelper;
+   }
 }
