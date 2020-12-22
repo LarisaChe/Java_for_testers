@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import java.io.File;
 import java.util.List;
 
 import org.hibernate.Session;

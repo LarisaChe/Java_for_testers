@@ -1,0 +1,79 @@
+apply plugin: 'java'
+
+/*repositories {
+    mavenCentral()
+}*/
+
+dependencies {
+    testImplementation(
+            'org.seleniumhq.selenium:selenium-java:3.141.59',
+            'org.testng:testng:7.0.0',
+            'org.hamcrest:hamcrest:2.2',
+            'com.beust:jcommander:1.78',
+            'com.thoughtworks.xstream:xstream:1.4.14',
+            'com.google.code.gson:gson:2.8.6',
+            'ch.qos.logback:logback-classic:1.1.5',
+            'mysql:mysql-connector-java:5.1.49',
+            'org.hibernate:hibernate-core:5.4.25.Final', //core:5.4.25.Final 5.1.0
+            'org.apache.httpcomponents:httpclient:4.5.13',//4.5.13
+            'org.apache.httpcomponents:fluent-hc:4.5.13'
+            //'com.jayway.restassured:rest-assured:2.9.0'
+    )
+}
+
+task testGroups(type: Test) {
+        useTestNG {
+            suites 'src/test/resources/testng-groups.xml'
+        }
+    if (project.hasProperty("browser")) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty("target")) {
+        systemProperty 'target', "${target}"
+    }
+    if (project.hasProperty("verifyUI")) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
+}
+
+task testContacts(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-contacts.xml'
+    }
+    if (project.hasProperty("browser")) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty("target")) {
+        systemProperty 'target', "${target}"
+    }
+    if (project.hasProperty("verifyUI")) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
+}
+
+task testAll(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-all.xml'
+    }
+    if (project.hasProperty("browser")) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty("target")) {
+        systemProperty 'target', "${target}"
+    }
+    if (project.hasProperty("verifyUI")) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
+}
+
+task testContactInOutGroup(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-ContactInOutGroup.xml'
+    }
+    if (project.hasProperty("browser")) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty("target")) {
+        systemProperty 'target', "${target}"
+    }
+}

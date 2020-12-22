@@ -1,0 +1,12 @@
+<list>
+  <group>
+    <name>Test xml G000</name>
+    <header>Header xml G0</header>
+    <footer>Footer xml G0</footer>
+  </group>
+  <group>
+    <name>Test xml G1000</name>
+    <header>Header xml G1</header>
+    <footer>Footer xml G1</footer>
+  </group>
+</list>

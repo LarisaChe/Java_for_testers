@@ -1,4 +1,4 @@
-package ru.stqa.pft.addressbook.appmanager;
+package ru.stqa.pft.addressbook2.appmanager;
 
 import java.io.IOException;
 import java.util.Set;
@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import ru.stqa.pft.addressbook.model.Issue;
+import ru.stqa.pft.addressbook2.model.Issue;
 
 public class RestHelper {
 

@@ -4,10 +4,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.time.LocalDateTime;
-import java.util.function.DoubleToIntFunction;
 
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import ru.stqa.pft.addressbook.model.ContactData;

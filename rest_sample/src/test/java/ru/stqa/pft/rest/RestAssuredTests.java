@@ -52,6 +52,7 @@ public class RestAssuredTests {
                  .post("https://bugify.stqa.ru/api/issues.json").asString();
 
 
+
       JsonElement parsed = new JsonParser().parse(json);
       System.out.println(parsed.toString());
       System.out.println(parsed.getAsJsonObject().get("issue_id").getAsInt());

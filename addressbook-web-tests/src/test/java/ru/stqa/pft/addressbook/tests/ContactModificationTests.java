@@ -6,8 +6,6 @@ import static org.testng.Assert.*;
 
 import java.io.IOException;
 
-import org.testng.SkipException;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -59,8 +57,6 @@ public class ContactModificationTests extends TestBase {
 
    @Test
    public void testContactModification1() throws IOException {
-      try {
-         skipIfNotFixed(369);
          app.goTo().gotoHomePage();
          Contacts before = app.db().contacts();
          ContactData modifiedContact = before.iterator().next();
@@ -76,9 +72,6 @@ public class ContactModificationTests extends TestBase {
 
          assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact))); //ff
          verifyContactListInUI();
-      } catch (SkipException e) {
-         e.printStackTrace();
-      }
    }
 
    @Test

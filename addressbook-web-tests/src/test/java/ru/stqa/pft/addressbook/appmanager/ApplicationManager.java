@@ -1,13 +1,11 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -29,7 +27,6 @@ public class ApplicationManager  {
    private WebDriver wd;
    private String browser;
    private DbHelper dbHelper;
-   private RestHelper restHelper;
 
    public ApplicationManager(String browser) {
       this.browser = browser;
@@ -98,10 +95,4 @@ public class ApplicationManager  {
 
    public DbHelper db() { return dbHelper;}
 
-   public RestHelper rest() {
-     /* if (restHelper == null) {
-         restHelper = new RestHelper(this);
-      } */
-      return restHelper;
-   }
 }

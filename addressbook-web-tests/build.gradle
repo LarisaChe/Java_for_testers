@@ -14,10 +14,7 @@ dependencies {
             'com.google.code.gson:gson:2.8.6',
             'ch.qos.logback:logback-classic:1.1.5',
             'mysql:mysql-connector-java:5.1.49',
-            'org.hibernate:hibernate-core:5.4.25.Final', //core:5.4.25.Final 5.1.0
-            'org.apache.httpcomponents:httpclient:4.5.13',//4.5.13
-            'org.apache.httpcomponents:fluent-hc:4.5.13'
-            //'com.jayway.restassured:rest-assured:2.9.0'
+            'org.hibernate:hibernate-core:5.4.25.Final' //core:5.4.25.Final 5.1.0
     )
 }
 

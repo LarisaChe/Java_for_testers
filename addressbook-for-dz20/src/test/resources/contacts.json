@@ -1,0 +1,30 @@
+[
+  {
+    "firstname": "Firstname test json G 0000",
+    "middlename": "Middlename test json G0",
+    "lastname": "Lastname test json G0",
+    "nickname": "Nickname test json G0",
+    "address": "Address test json G0",
+    "homePhone": "+7(496)3003030",
+    "mobilePhone": "+7(900)5005050",
+    "workPhone": "+7(499)8008080",
+    "email": "test_json_0@email.ru",
+    "bday": "28",
+    "bmonth": "April",
+    "byear": "1980"
+  },
+  {
+    "firstname": "Имя (первое) test json G 0000",
+    "middlename": "Отчество (2) test json G0",
+    "lastname": "Фамилия test json G0",
+    "nickname": "Псевдоним test json G0",
+    "address": "Адрес test json G0",
+    "homePhone": "+7(496)3003030",
+    "mobilePhone": "+7(900)5005050",
+    "workPhone": "+7(499)8008080",
+    "email": "test_json_0@email.ru",
+    "bday": "28",
+    "bmonth": "April",
+    "byear": "1980"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Test json G0",
+    "header": "Header json G0",
+    "footer": "Footer json G0"
+  },
+  {
+    "name": "Test json G1",
+    "header": "Header json G1",
+    "footer": "Footer json G1"
+  },
+  {
+    "name": "Test json G2",
+    "header": "Header json G2",
+    "footer": "Footer json G2"
+  },
+  {
+    "name": "Test json G3",
+    "header": "Header json G3",
+    "footer": "Footer json G3"
+  },
+  {
+    "name": "Test json G4",
+    "header": "Header json G4",
+    "footer": "Footer json G4"
+  }
+]

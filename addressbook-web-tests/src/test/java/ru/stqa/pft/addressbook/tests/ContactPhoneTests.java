@@ -6,11 +6,8 @@ import static org.hamcrest.MatcherAssert.*;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 
-import ru.stqa.pft.addressbook.appmanager.ContactHelper;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 /**

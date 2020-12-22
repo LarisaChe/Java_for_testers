@@ -1,8 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
