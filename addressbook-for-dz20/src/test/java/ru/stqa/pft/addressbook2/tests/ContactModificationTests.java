@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook2.model.ContactData;
 import ru.stqa.pft.addressbook2.model.Contacts;
 import ru.stqa.pft.addressbook2.model.GroupData;
-
+// для дз 20
 public class ContactModificationTests extends TestBase {
    String groupName = "Test_M";
    ContactData contact = new ContactData()
@@ -59,7 +59,7 @@ public class ContactModificationTests extends TestBase {
    @Test
    public void testContactModification1() throws IOException {
       try {
-         skipIfNotFixed(369);
+         skipIfNotFixed(2);
          app.goTo().gotoHomePage();
          Contacts before = app.db().contacts();
          ContactData modifiedContact = before.iterator().next();
@@ -81,7 +81,8 @@ public class ContactModificationTests extends TestBase {
    }
 
    @Test
-   public void testContactModification2() {
+   public void testContactModification2() throws IOException, SkipException {
+      skipIfNotFixed(1);
       app.goTo().gotoHomePage();
       Contacts before = app.db().contacts();
       ContactData modifiedContact = before.iterator().next();
@@ -100,7 +101,8 @@ public class ContactModificationTests extends TestBase {
    }
 
    @Test
-   public void testAddContactToGroup() {
+   public void testAddContactToGroup() throws IOException {
+      skipIfNotFixed(369);
       app.goTo().gotoHomePage();
       Contacts before = app.db().contacts();
 

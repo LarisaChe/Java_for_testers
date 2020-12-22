@@ -12,11 +12,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 
-/**
- * Description.
- *
- * @author lchernaya
- */
 public class ApplicationManager  {
 
    private final Properties properties;
@@ -97,9 +92,9 @@ public class ApplicationManager  {
    public DbHelper db() { return dbHelper;}
 
    public RestHelper rest() {
-     /* if (restHelper == null) {
+      if (restHelper == null) {
          restHelper = new RestHelper(this);
-      } */
+      }
       return restHelper;
    }
 }

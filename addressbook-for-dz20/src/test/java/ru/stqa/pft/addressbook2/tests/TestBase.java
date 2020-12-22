@@ -78,7 +78,7 @@ public class TestBase  {
    }
 
    public boolean isIssueOpen(int issueId) throws IOException {
-      System.out.println("Check issue id="+issueId);
+      System.out.println("Check issue id: "+issueId);
       Set<Issue> issues = app.rest().getIssue(issueId);
       Issue issue = issues.iterator().next();
       System.out.println("State_name: "+issue.getState_name());
