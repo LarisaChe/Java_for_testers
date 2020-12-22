@@ -71,6 +71,7 @@ public class ContactAddToGroupsTests extends TestBase {
 
       while ((app.db().groups().size() - app.db().contact(contactsWithoutGroups.getId()).getGroups().size())
              < app.groupsCount()) {
+         app.goTo().groupPage();
          app.group().create(new GroupData().withName("TestGroup " + String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS", LocalDateTime.now()))
                                            .withHeader("TestHeader A").withFooter("TestFooter A"));
          app.goTo().groupPage();

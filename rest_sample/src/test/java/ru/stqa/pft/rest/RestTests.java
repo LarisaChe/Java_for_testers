@@ -16,11 +16,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import ru.stqa.pft.model.Issue;
 
-/**
- * Description.
- *
- * @author lchernaya
- */
 public class RestTests {
    @Test
    public void testCreateIssue() throws IOException {
@@ -33,6 +28,19 @@ public class RestTests {
       oldIssues.add(newIssue.withId(issueId));
       System.out.println(newIssues.toString());
       Assert.assertEquals(newIssues, oldIssues);
+   }
+
+   @Test
+   public void testChangeIssueState() throws IOException {
+      int issueId = 369;
+      String json = getExecutor().execute(Request.Post("https://bugify.stqa.ru/api/issues/369.json")
+                                                 .bodyForm(new BasicNameValuePair("method", "update"))
+                                                 .bodyForm(new BasicNameValuePair("state", "3")))
+                                 .returnContent().asString();
+      JsonElement parsed = new JsonParser().parse(json);
+      System.out.println(parsed.toString());
+      System.out.println(parsed.getAsJsonObject().get("issue_id").getAsInt());
+      //return parsed.getAsJsonObject().get("issue_id").getAsInt();
    }
 
    private Set<Issue> getIssues() throws IOException {
