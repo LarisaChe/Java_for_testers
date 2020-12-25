@@ -3,14 +3,6 @@ package ru.stqa.pft.sandbox;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-
-/**
- * Description.
- *
- * @author Larisa Chernaya
- */
-
 public class DistanceTests {
 
    @Test

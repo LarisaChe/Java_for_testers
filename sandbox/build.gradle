@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
-//mainClassName = "ru.stqa.pft.sandbox.MyFirstProgram"
-mainClassName = "ru.stqa.pft.sandbox.MyDZ2"
+mainClassName = "ru.stqa.pft.sandbox.MyFirstProgram"
+//mainClassName = "ru.stqa.pft.sandbox.MyDZ2"
 
 repositories {
     mavenCentral()
@@ -13,5 +13,5 @@ dependencies {
 
 test {
     systemProperty "file.encoding", "utf-8"
-    useTestNG
+    useTestNG()
     }
