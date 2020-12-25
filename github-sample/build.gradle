@@ -1,0 +1,19 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation(
+            'org.testng:testng:7.0.0',
+            'com.jcabi:jcabi-github:1.1.2' //0.27
+    )
+}
+
+test {
+    systemProperty "file.encoding", "utf-8"
+    useTestNG {
+        suites 'src/test/resources/testng.xml'
+    }
+}
