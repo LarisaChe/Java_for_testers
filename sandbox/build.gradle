@@ -10,3 +10,8 @@ repositories {
 dependencies {
     implementation 'org.testng:testng:7.0.0'
 }
+
+test {
+    systemProperty "file.encoding", "utf-8"
+    useTestNG
+    }
