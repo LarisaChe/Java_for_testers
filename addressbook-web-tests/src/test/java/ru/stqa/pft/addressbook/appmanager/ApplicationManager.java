@@ -8,7 +8,9 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -39,7 +41,7 @@ public class ApplicationManager  {
          }
 
    public void init() throws IOException {
-      String target = System.getProperty("target", "remote"); //local
+      String target = System.getProperty("target", "local"); //local   remote
       properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
       dbHelper = new DbHelper();
 
@@ -55,7 +57,7 @@ public class ApplicationManager  {
          DesiredCapabilities capabilites = new DesiredCapabilities();
          capabilites.setBrowserName(browser);
          //capabilites.setPlatform(Platform.fromString(System.getProperty("platform", "win7")));
-         capabilites.setPlatform(Platform.fromString(System.getProperty("platform", "linux")));
+         capabilites.setPlatform(Platform.fromString(System.getProperty("platform", "win7"))); // linux  win7
          wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilites);
       }
       wd.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
@@ -107,5 +109,9 @@ public class ApplicationManager  {
    public ContactHelper contact() { return contactHelper; }
 
    public DbHelper db() { return dbHelper;}
+
+   public byte[] takeScreenshot() {
+      return ((TakesScreenshot) wd).getScreenshotAs(OutputType.BYTES);
+   }
 
 }

@@ -3,6 +3,9 @@ apply plugin: 'java'
 /*repositories {
     mavenCentral()
 }*/
+configurations {
+    agent
+}
 
 dependencies {
     testImplementation(
@@ -14,8 +17,10 @@ dependencies {
             'com.google.code.gson:gson:2.8.6',
             'ch.qos.logback:logback-classic:1.1.5',
             'mysql:mysql-connector-java:5.1.49',
-            'org.hibernate:hibernate-core:5.4.25.Final' //core:5.4.25.Final 5.1.0
+            'org.hibernate:hibernate-core:5.4.25.Final', //core:5.4.25.Final 5.1.0
+            "ru.yandex.qatools.allure:allure-testng-adaptor:1.4.0.RC4"
     )
+    agent "org.aspectj:aspectjweaver:1.8.0"
 }
 
 task testGroups(type: Test) {
@@ -34,6 +39,10 @@ task testGroups(type: Test) {
     if (project.hasProperty("verifyUI")) {
         systemProperty 'verifyUI', "${verifyUI}"
     }
+}
+
+testGroups.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
 }
 
 task testContacts(type: Test) {
