@@ -1,0 +1,95 @@
+[
+  {
+    "key": "DictjsonG0",
+    "nameRu": "NameRu json G 0",
+    "nameEn": "NameEn json G 0",
+    "hi": true,
+    "attributes": [
+      {
+        "key": "date",
+        "nameRu": "Дата",
+        "nameEn": "Date",
+        "type": "Дата",
+        "filter": true
+      },
+      {
+        "key": "num",
+        "nameRu": "Числовой атрибут",
+        "nameEn": "Number",
+        "type": "Число",
+        "filter": true
+      },
+      {
+        "key": "str",
+        "nameRu": "строка",
+        "nameEn": "strEN",
+        "type": "Строка",
+        "filter": true
+      },
+      {
+        "key": "ff",
+        "nameRu": "файл",
+        "nameEn": "File",
+        "type": "Файл",
+        "filter": true
+      },
+      {
+        "key": "dt",
+        "nameRu": "Дата и время",
+        "nameEn": "Date and time",
+        "type": "Дата и время",
+        "filter": true
+      },
+      {
+        "key": "otm",
+        "nameRu": "Отметка времени",
+        "nameEn": "Ldts",
+        "type": "Отметка времени",
+        "filter": true
+      },
+      {
+        "key": "boo",
+        "nameRu": "Булевый тип",
+        "nameEn": "Bool",
+        "type": "Булевый тип",
+        "filter": true
+      },
+      {
+        "key": "text",
+        "nameRu": "Текст",
+        "nameEn": "Text",
+        "type": "Текст",
+        "filter": true
+      }
+    ]
+  },
+  {
+    "key": "DictjsonG1",
+    "nameRu": "NameRu json G 1",
+    "nameEn": "NameEn json G 1",
+    "hi": false,
+    "attributes": [
+            {
+        "key": "str",
+        "nameRu": "строка",
+        "nameEn": "strEN",
+        "type": "Строка",
+        "filter": true
+      },
+      {
+        "key": "num",
+        "nameRu": "Числовой атрибут",
+        "nameEn": "Number",
+        "type": "Число",
+        "filter": true
+      },
+      {
+        "key": "date",
+        "nameRu": "Дата",
+        "nameEn": "Date",
+        "type": "Дата",
+        "filter": true
+      }
+    ]
+  }
+]

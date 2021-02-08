@@ -5,3 +5,5 @@ gradle-app.setting
 
 !gradle-wrapper.jar
 *.txt
+addressbook-web-tests/allure-report/data/behaviors.csv
+addressbook-web-tests/allure-report/widgets/status-chart.json

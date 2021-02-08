@@ -1,0 +1,44 @@
+apply plugin: 'java'
+
+/*repositories {
+    mavenCentral()
+}*/
+configurations {
+    agent
+}
+
+dependencies {
+    testImplementation(
+            'org.seleniumhq.selenium:selenium-java:3.141.59',
+            'org.testng:testng:7.0.0',
+            'org.hamcrest:hamcrest:2.2',
+            'com.beust:jcommander:1.78',
+            'com.thoughtworks.xstream:xstream:1.4.14',
+            'com.google.code.gson:gson:2.8.6',
+            'ch.qos.logback:logback-classic:1.1.5',
+            'mysql:mysql-connector-java:5.1.49',
+            'org.hibernate:hibernate-core:5.4.25.Final', //core:5.4.25.Final 5.1.0
+            "ru.yandex.qatools.allure:allure-testng-adaptor:1.4.0.RC4"
+    )
+    agent "org.aspectj:aspectjweaver:1.8.0"
+}
+
+task testArs(type: Test) {
+        useTestNG {
+            suites 'src/test/resources/testng.xml'
+        }
+    if (project.hasProperty("browser")) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty("platform")) {
+        systemProperty 'platform', "${platform}"
+    }
+    if (project.hasProperty("target")) {
+        systemProperty 'target', "${target}"
+    }
+ /*   if (project.hasProperty("verifyUI")) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }*/
+}
+
+

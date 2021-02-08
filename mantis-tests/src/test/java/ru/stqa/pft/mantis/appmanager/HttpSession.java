@@ -18,11 +18,6 @@ import org.apache.http.util.EntityUtils;
 
 import sun.net.www.http.HttpClient;
 
-/**
- * Description.
- *
- * @author lchernaya
- */
 public class HttpSession {
 
    private CloseableHttpClient httpclient;

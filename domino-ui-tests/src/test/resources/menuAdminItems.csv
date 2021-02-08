@@ -1,0 +1,27 @@
+id;nameRU;nameEN;url;level;inMenuGroup;orderInMenuGroup;;;;;
+1;Пользователи;Users;#entity.edit_users/USER;1;.z-icon-shield;0;;;;;
+2;Роли;Roles;#entity.edit_roles/ROLE;1;.z-icon-shield;1;;;;;
+3;Должности;Positions;#entity.edit_job_positions/JOB_POSITION;1;.z-icon-shield;3;;;;;
+4;Подразделения;Departments;#entity.edit_departments/DEPARTMENT;1;.z-icon-shield;4;;;;;
+5;Группы рассылок;Notification groups;#entity.edit_notification_groups/NOTIFICATION_GROUP;1;.z-icon-shield;7;;;;;
+;;;;;;;;;;;
+;;;;;;;;;;;
+;;;;;;"""";;;;;
+;;;;;;;;;;;
+id;1;2;3;4;5;;"""id"": ""1"",";"""id"": ""2"",";"""id"": ""3"",";"""id"": ""4"",";"""id"": ""5"","
+nameRU;Пользователи;Роли;Должности;Подразделения;Группы рассылок;;"""nameRU"": ""Пользователи"",";"""nameRU"": ""Роли"",";"""nameRU"": ""Должности"",";"""nameRU"": ""Подразделения"",";"""nameRU"": ""Группы рассылок"","
+nameEN;Users;Roles;Positions;Departments;Notification groups;;"""nameEN"": ""Users"",";"""nameEN"": ""Roles"",";"""nameEN"": ""Positions"",";"""nameEN"": ""Departments"",";"""nameEN"": ""Notification groups"","
+url;#entity.edit_users/USER;#entity.edit_roles/ROLE;#entity.edit_job_positions/JOB_POSITION;#entity.edit_departments/DEPARTMENT;#entity.edit_notification_groups/NOTIFICATION_GROUP;;"""url"": ""#entity.edit_users/USER"",";"""url"": ""#entity.edit_roles/ROLE"",";"""url"": ""#entity.edit_job_positions/JOB_POSITION"",";"""url"": ""#entity.edit_departments/DEPARTMENT"",";"""url"": ""#entity.edit_notification_groups/NOTIFICATION_GROUP"","
+level;1;1;1;1;1;;"""level"": ""1"",";"""level"": ""1"",";"""level"": ""1"",";"""level"": ""1"",";"""level"": ""1"","
+inMenuGroup;.z-icon-shield;.z-icon-shield;.z-icon-shield;.z-icon-shield;.z-icon-shield;;"""inMenuGroup"": "".z-icon-shield"",";"""inMenuGroup"": "".z-icon-shield"",";"""inMenuGroup"": "".z-icon-shield"",";"""inMenuGroup"": "".z-icon-shield"",";"""inMenuGroup"": "".z-icon-shield"","
+orderInMenuGroup;0;1;3;4;7;;"""orderInMenuGroup"": ""0""";"""orderInMenuGroup"": ""1""";"""orderInMenuGroup"": ""3""";"""orderInMenuGroup"": ""4""";"""orderInMenuGroup"": ""7"""
+[;;;;;;;;;;;
+;{;;;;;;;;;;
+;"""id"": ""1"",";;;;;;;;;;
+;"""nameRU"": ""Пользователи"",";;;;;;;;;;
+;"""nameEN"": ""Users"",";;;;;;;;;;
+;"""url"": ""#entity.edit_users/USER"",";;;;;;;;;;
+;"""level"": ""1"",";;;;;;;;;;
+;"""inMenuGroup"": "".z-icon-shield"",";;;;;;;;;;
+;"""orderInMenuGroup"": ""0""";;;;;;;;;;
+;};;;;;;;;;;

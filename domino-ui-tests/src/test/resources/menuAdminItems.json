@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1",
+    "nameRU": "Пользователи",
+    "nameEN": "Users",
+    "url": "#entity.edit_users/USER",
+    "level": "1",
+    "inMenuGroup": ".z-icon-shield",
+    "orderInMenuGroup": "0"
+  },
+  {
+    "id": "2",
+    "nameRU": "Роли",
+    "nameEN": "Roles",
+    "url": "#entity.edit_roles/ROLE",
+    "level": "1",
+    "inMenuGroup": ".z-icon-shield",
+    "orderInMenuGroup": "1"
+  },
+  {
+    "id": "3",
+    "nameRU": "Должности",
+    "nameEN": "Positions",
+    "url": "#entity.edit_job_positions/JOB_POSITION",
+    "level": "1",
+    "inMenuGroup": ".z-icon-shield",
+    "orderInMenuGroup": "3"
+  },
+  {
+    "id": "4",
+    "nameRU": "Подразделения",
+    "nameEN": "Departments",
+    "url": "#entity.edit_departments/DEPARTMENT",
+    "level": "1",
+    "inMenuGroup": ".z-icon-shield",
+    "orderInMenuGroup": "4"
+  },
+  {
+    "id": "5",
+    "nameRU": "Группы рассылок",
+    "nameEN": "Notification groups",
+    "url": "#entity.edit_notification_groups/NOTIFICATION_GROUP",
+    "level": "1",
+    "inMenuGroup": ".z-icon-shield",
+    "orderInMenuGroup": "7"
+  }
+]

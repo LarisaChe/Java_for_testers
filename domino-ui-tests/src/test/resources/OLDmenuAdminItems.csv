@@ -1,0 +1,5 @@
+0;Пользователи;Users;#entity.edit_users/USER
+1;Роли;Roles;#entity.edit_roles/ROLE
+3;Должности;Positions;#entity.edit_job_positions/JOB_POSITION
+4;Подразделения;Departments;#entity.edit_departments/DEPARTMENT
+7;Группы рассылок;Notification groups;#entity.edit_notification_groups/NOTIFICATION_GROUP

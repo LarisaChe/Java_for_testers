@@ -1,0 +1,30 @@
+1;Пользователи;Users;#entity.edit_users/USER;1;.z-icon-shield;0
+2;Роли;Roles;#entity.edit_roles/ROLE;1;.z-icon-shield;1
+3;Разрешения;Permissions;#entity.edit_permissions/;1;.z-icon-shield;2
+4;Должности;Positions;#entity.edit_job_positions/JOB_POSITION;1;.z-icon-shield;3
+5;Подразделения;Departments;#entity.edit_departments/DEPARTMENT;1;.z-icon-shield;4
+6;События;Events;#event.event_list/;1;.z-icon-shield;5
+7;Журнал аудита;Audit log;#audit.audit_logs/;1;.z-icon-shield;6
+8;Группы рассылок;Notification groups;#entity.edit_notification_groups/NOTIFICATION_GROUP;1;.z-icon-shield;7
+9;Экспорт;Export;#dimex.dimex_export_results/;1;.z-icon-shield;8
+10;Импорт;Import;#dimex.dimex_import_results/;1;.z-icon-shield;9
+11;Конфигурации;Configurations list;#dimex.dimex_configuration_list/;1;.z-icon-shield;10
+12;СПАРК;Spark;#spark.settings/;1;.z-icon-shield;11
+13;Структура;Structure;#entity.meta.entity_meta_list/;1;.z-icon-gears;0
+14;Данные;Data;#entity.meta.entity_list/;1;.z-icon-gears;1
+15;Формы;Forms;#entity.meta.form_meta_list/;2;.z-icon-gears;0
+16;Классификаторы;Classifiers;#entity.meta.classifier_meta_list/;2;.z-icon-gears;1
+17;Показатели;Formula list;#calc.formula.formula_list/;2;.z-icon-gears;2
+18;Модели;Models;#calc.model.model_list/;2;.z-icon-gears;3
+19;Сравнение моделей;Compare models;#entity.compare_models/;2;.z-icon-gears;4
+20;Шаблоны импорта;Import templates;#form.templates.templates_import/;3;.z-icon-gears;0
+21;Шаблоны экспорта;Export templates;#form.templates.templates_export/;3;.z-icon-gears;1
+22;Шаблоны форм;Form templates;#form.templates.templates_forms/;3;.z-icon-gears;2
+23;Шаблоны отчетов;Report templates;#form.templates.templates_report/;3;.z-icon-gears;3
+24;Группы отчетов;Report groups;#entity.edit_report_groups/REPORT_GROUP;4;.z-icon-gears;0
+25;Список отчетов;Report list;#entity.edit_reports/REPORT;4;.z-icon-gears;1
+26;Параметры отчетов;Report params;#entity.edit_report_params/REPORT_PARAM;4;.z-icon-gears;2
+27;Экранные формы;UI Forms;#designer.ui_component_forms/;5;.z-icon-gears;0
+28;Списочные представления;UI Views;#designer.ui_component_views/;5;.z-icon-gears;1
+29;Элементы интерфейса;UI Elements;#designer.ui_component_list/;5;.z-icon-gears;2
+30;Конструктор меню;Menu editor;#designer.ui_component_menu/;5;.z-icon-gears;3

@@ -1,0 +1,60 @@
+[
+  {
+    "key": "DictjsonG0",
+    "nameRu": "NameRu json G 0",
+    "nameEn": "NameEn json G 0",
+    "hi": true,
+    "attributes": [
+      {
+        "key": "str0",
+        "nameRu": "strRu0",
+        "nameEn": "strEN0",
+        "type": "string",
+        "filter": true
+      },
+      {
+        "key": "str1",
+        "nameRu": "strRu1",
+        "nameEn": "strEN1",
+        "type": "string",
+        "filter": true
+      },
+      {
+        "key": "str2",
+        "nameRu": "strRu2",
+        "nameEn": "strEN2",
+        "type": "string",
+        "filter": true
+      }
+    ]
+  },
+  {
+    "key": "DictjsonG1",
+    "nameRu": "NameRu json G 1",
+    "nameEn": "NameEn json G 1",
+    "hi": true,
+    "attributes": [
+      {
+        "key": "str0",
+        "nameRu": "strRu0",
+        "nameEn": "strEN0",
+        "type": "string",
+        "filter": true
+      },
+      {
+        "key": "str1",
+        "nameRu": "strRu1",
+        "nameEn": "strEN1",
+        "type": "string",
+        "filter": true
+      },
+      {
+        "key": "str2",
+        "nameRu": "strRu2",
+        "nameEn": "strEN2",
+        "type": "string",
+        "filter": true
+      }
+    ]
+  }
+]
