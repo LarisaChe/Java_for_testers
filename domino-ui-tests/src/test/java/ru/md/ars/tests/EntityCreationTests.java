@@ -8,6 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -16,6 +19,11 @@ import com.google.gson.reflect.TypeToken;
 import ru.md.ars.model.EntityData;
 
 public class EntityCreationTests extends TestBase {
+
+   @BeforeClass
+   public void zoomOut() {
+      app.go_to().zoomOut();
+   }
 
    @DataProvider
    public Iterator<Object[]> validEntitiesFromJSON() throws IOException {
@@ -33,20 +41,33 @@ public class EntityCreationTests extends TestBase {
    }
 
    @Test (dataProvider = "validEntitiesFromJSON")
-   public void testEntityCreation(EntityData entity) throws InterruptedException {
+   public void testEntityCreation1(EntityData entity) throws InterruptedException {
       app.go_to().pageStructure();
-      app.entityMeta().create(entity);
+      app.entityMeta().create(entity, true, false);
       System.out.println("new entity key: "+app.entityMeta().newKey);
       app.go_to().pageData();
       app.entityMeta().openEntityInDataView(app.entityMeta().newKey);
-      app.entityData().fillWithSimpleData(entity.isHi());
+      app.entityData().fillWithSimpleData(entity.isHi(), 5);
       app.entityData().commonTest();
       //app.entityData().fillWithData();
    }
+
+   @Test (dataProvider = "validEntitiesFromJSON")
+   public void testEntityCreation2(EntityData entity) throws InterruptedException {
+      app.go_to().pageStructure();
+      app.entityMeta().create(entity, true, true);
+      System.out.println("new entity key: "+app.entityMeta().newKey);
+      app.go_to().pageData();
+      app.entityMeta().openEntityInDataView(app.entityMeta().newKey);
+      app.entityData().fillWithSimpleData(entity.isHi(), 5);
+      app.entityData().commonTest();
+      //app.entityData().fillWithData();
+   }
+
    @Test (enabled = false)
    public  void testFillout() throws InterruptedException {
       app.go_to().pageData();
       app.entityMeta().openEntityInDataView("DICTJSONG11612559019568");
-      app.entityData().fillWithSimpleData(false);
+      app.entityData().fillWithSimpleData(false, 1);
    }
 }

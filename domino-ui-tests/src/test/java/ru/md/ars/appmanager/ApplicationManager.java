@@ -3,13 +3,17 @@ package ru.md.ars.appmanager;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -23,6 +27,8 @@ public class ApplicationManager {
    private CommonEntityHelper entityData;
    private EntityHelper entityMeta;
    public String baseURL;
+   public List<String> typesList = new ArrayList<String>();
+   private SessionHelper sessionHelper;
 
    public ApplicationManager(String browser) {
       this.browser = browser;
@@ -61,7 +67,11 @@ public class ApplicationManager {
         wd.get(firstURL);
 
          baseURL = properties.getProperty("web.http") + properties.getProperty("web.baseUrl");
-        
+
+         sessionHelper = new SessionHelper(this);
+         //sessionHelper.login("admin", "secret");
+         sessionHelper.login(properties.getProperty("web.adminLogin"),properties.getProperty("web.adminPassword"));
+
       }
         wdwait = new WebDriverWait(wd, 5000);
       return wd;
@@ -87,6 +97,13 @@ public class ApplicationManager {
       }
       return entityMeta;
    }
+
+
+  /* public void zoomOut() {
+      Actions builder = new Actions(wd);
+      builder.sendKeys(Keys.chord(Keys.CONTROL, "+")).perform();
+   }*/
+
    /*public void changeToRussianLanguage() {
       System.out.println(" ---  " + wd.getTitle());
       if (wd.getTitle().equals("ARS | Main")) {

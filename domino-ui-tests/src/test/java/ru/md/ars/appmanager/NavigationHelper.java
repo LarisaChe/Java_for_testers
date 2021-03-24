@@ -7,7 +7,9 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 import java.util.Locale;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.google.gson.internal.bind.util.ISO8601Utils;
@@ -41,16 +43,22 @@ public class NavigationHelper extends HelperBase {
 //      Assert.assertEquals(wd.getTitle(), "АРС|Карточка пользователя");
    }
 
-   public void adminMenuItem(String locatorUpItem, int item, String partOfUrl) {
+   public void adminMenuItem(String locatorUpItem, int item, String partOfUrl) throws InterruptedException {
       if (!isElementPresent(By.cssSelector(".z-nav-open "+locatorUpItem))) {
          click(By.cssSelector(locatorUpItem)); //".z-icon-shield"
       }
       wd.findElements(By.cssSelector(".z-nav-open .z-navitem")).get(item).click();
-      app.wdwait.until(ExpectedConditions.urlContains(partOfUrl));
+      sleep(1000);
+      //app.wdwait.until(ExpectedConditions.urlContains(partOfUrl));
+      if (isAlertPresent()) {
+         System.out.println("-------- ALERT ----------");
+         wd.switchTo().alert().dismiss();  //accept();
+      }
       printInfoAboutPage();
    }
 
-   public void changeToRussianLanguage() {
+   public void changeToRussianLanguage() throws InterruptedException {
+      sleep(300);
       System.out.println(" ---  " + wd.getTitle());
       if (wd.getTitle().equals("ARS | Main")) {
          app.go_to().userProfile();
@@ -119,5 +127,10 @@ public class NavigationHelper extends HelperBase {
 
    public void pageData() throws InterruptedException {
       pageByUrl("#entity.meta.entity_list/", "entity_list");
+   }
+
+   public void zoomOut() {
+      Actions builder = new Actions(wd);
+      builder.sendKeys(Keys.chord(Keys.CONTROL, "-", "-")).perform();
    }
 }

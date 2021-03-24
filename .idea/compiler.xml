@@ -3,6 +3,9 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
       <module name="ars-ui-tests" target="1.8" />
+      <module name="ars-ui-tests.main" target="1.8" />
+      <module name="ars-ui-tests.test" target="1.8" />
+      <module name="Java_for_testers.ars-ui-tests" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

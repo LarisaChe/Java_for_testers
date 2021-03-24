@@ -22,20 +22,48 @@ public class EntityHelper extends HelperBase {
       super(app);
    }
 
-   public void create(EntityData entity) throws InterruptedException {
+   public void create(EntityData entity, boolean isKeySuffix, boolean isCreationAttributeInModalWindow) throws InterruptedException {
       addEntity();
-      filloutEntityParams(entity);
+      filloutEntityParams(entity, isKeySuffix);
       int row = 0;
       Iterator<AttributeData> enityIterator = entity.getAttributes().stream().iterator();
-      filloutAttribute(enityIterator.next(), row);
-  //    save();
+      filloutAttributeInRow(enityIterator.next(), row);
+
       while (enityIterator.hasNext()) {
          row++;
-         addAttribute();
-         filloutAttribute(enityIterator.next(), row);
-
+         if (isCreationAttributeInModalWindow) {
+            addAttributeInModalWindows();
+            filloutAttributeInModalWindows(enityIterator.next(), row);
+         }
+         else {
+            addAttribute();
+            filloutAttributeInRow(enityIterator.next(), row);
+         }
       }
+      sleep(500);
       save();
+   }
+
+   private void filloutAttributeInModalWindows(AttributeData attribute, int row) throws InterruptedException {
+      while (wd.findElements(By.cssSelector(".z-window-modal .z-combobox-input")).get(0)
+               .getAttribute("value").isEmpty()) {
+         fillAttributeType(attribute, 0, ".z-window-modal ");
+      }
+      //filloutParamsOfAttibuteInRow(".z-window-modal", attribute, row, 0);
+      filloutParamsOfAttibuteInModalWindows(attribute, row);
+      sleep(500);
+      saveAndCloseModalWindows();
+   }
+
+   private void saveAndCloseModalWindows() {
+      wd.findElements(By.cssSelector(".z-window-modal .z-button")).get(1).click();
+      app.wdwait.until(ExpectedConditions.stalenessOf(wd.findElement(By.cssSelector(".z-window-modal"))));
+      System.out.println("закрыли Модальное окно");
+   }
+
+   private void addAttributeInModalWindows() {
+      wd.findElement(By.cssSelector(".z-icon-window-maximize")).click();
+      app.wdwait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".z-window-modal")));
    }
 
    private void addAttribute() {
@@ -46,18 +74,23 @@ public class EntityHelper extends HelperBase {
 
    private void save() {
       wd.findElement(By.cssSelector(".z-icon-save")).click();
-    /*  wd.findElements(By.cssSelector("textarea")).get(0).click();
-      wd.findElements(By.cssSelector("textarea")).get(0).clear();
-      app.wdwait.until(ExpectedConditions.stalenessOf(wd.findElement(By.cssSelector(".z-notification"))));
-      */
+      app.wdwait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".z-notification")));
+      //wd.findElement(By.cssSelector(".z-notification")).clear();
    }
 
-   private void filloutAttribute(AttributeData attribute, int row) throws InterruptedException {
-      while (!wd.findElements(By.cssSelector(".z-combobox-input")).get(row * 3)
-                .getAttribute("value").equals(attribute.getType())) {
-         fillAttributeType(attribute, row);
+   private void filloutAttributeInRow(AttributeData attribute, int row) throws InterruptedException {
+
+      while (wd.findElements(By.cssSelector(".z-combobox-input")).get(row * 3)
+               .getAttribute("value").isEmpty()) {
+         fillAttributeType(attribute, row, "");
       }
-      WebElement el = wd.findElements(By.cssSelector(".z-grid-body")).get(1).findElements(By.cssSelector(".z-row")).get(row);
+
+      //filloutParamsOfAttibuteInRow(".table-attributes.z-row", attribute, row, row);
+      filloutParamsOfAttibuteInRow(attribute, row);
+   }
+
+   private void filloutParamsOfAttibuteInRow( AttributeData attribute, int row) {
+      WebElement el = wd.findElements(By.cssSelector(".table-attributes.z-row")).get(row);
       el.findElements(By.cssSelector("input.z-textbox")).get(0).sendKeys(attribute.getKey());
 
       el.findElements(By.cssSelector("input.z-textbox")).get(1).sendKeys(attribute.getNameRu());
@@ -76,42 +109,73 @@ public class EntityHelper extends HelperBase {
       el.findElements(By.cssSelector(".z-spinner input")).get(0).sendKeys(String.valueOf(row));
    }
 
-   //private void fillAttributeType( String type, int row) throws InterruptedException {
-   private void fillAttributeType( AttributeData attribute, int row) throws InterruptedException {
-      wd.findElements(By.cssSelector(".z-icon-caret-down")).get(row * 3).click();
-      app.wdwait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".z-combobox-open")));
-      List<WebElement> comboboxItems = wd.findElements(By.cssSelector(".z-combobox-popup .z-comboitem"));
-      for (WebElement comboboxItem : comboboxItems) {
-         //System.out.println("menuitem: "+menuItem.getAttribute("textContent"));
-         String ss = comboboxItem.getAttribute("textContent").replaceAll("\u00A0", " ");
-         if (ss.equals(attribute.getType())) {
-            comboboxItem.click();
+   private void filloutParamsOfAttibuteInModalWindows(AttributeData attribute, int row) {
+
+      wd.findElements(By.cssSelector(".z-window-modal input.z-textbox")).get(0).sendKeys(attribute.getKey());
+
+      wd.findElements(By.cssSelector(".z-window-modal input.z-textbox")).get(1).sendKeys(attribute.getNameRu());
+      wd.findElements(By.cssSelector(".z-window-modal input.z-textbox")).get(2).sendKeys(attribute.getNameEn());
+
+      if (attribute.isFilter()) {
+         wd.findElements(By.cssSelector(".z-window-modal .z-checkbox")).get(2).click();
+      }
+
+      if (attribute.isMultilang()) {
+         wd.findElements(By.cssSelector(".z-window-modal .z-checkbox")).get(1).click();
+      }
+      if (attribute.isNullable()) {
+         wd.findElements(By.cssSelector(".z-window-modal .z-checkbox")).get(0).click();
+      }
+      wd.findElements(By.cssSelector(".z-window-modal .z-spinner input")).get(0).sendKeys(String.valueOf(row));
+   }
+
+   private void fillAttributeType( AttributeData attribute, int row, String local) throws InterruptedException {
+      int winModCount = wd.findElements(By.cssSelector(".z-window-modal")).size();
+      wd.findElements(By.cssSelector(local+".z-icon-caret-down")).get(row * 3).click();
+      app.wdwait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(local+".z-combobox-open")));
+      if (app.typesList.size()==0) {
+         //app.wdwait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".z-combobox-open")));
+         List<WebElement> comboboxItems = wd.findElements(By.cssSelector(local+".z-combobox-popup .z-comboitem"));
+         for (WebElement comboboxItem : comboboxItems) {
+            System.out.println("comboboxItem: "+comboboxItem.getAttribute("textContent"));
+            String ss = comboboxItem.getAttribute("textContent").replaceAll("\u00A0", " ");
+            app.typesList.add(ss.toUpperCase());
+         }
+         System.out.println("app.typesList.size(): "+app.typesList.size());
+         System.out.println(app.typesList);
+      }
+      System.out.println(attribute.getType()+"  --  "+attribute.getType().toUpperCase());
+      for (int i=0;i<app.typesList.size();i++) {
+         if (app.typesList.get(i).equals(attribute.getType().toUpperCase())) {
+            System.out.println("Нашли!!!");
+            wd.findElements(By.cssSelector(".z-combobox-popup .z-comboitem")).get(i).click();
             break;
          }
       }
       if (!(attribute.getRef()==null)) {
          sleep(1000);
-         app.wdwait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".z-window-modal")));
+         //app.wdwait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".z-window-modal")));
+         app.wdwait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(".z-window-modal"), winModCount+1));
          String[] split = attribute.getRef().split("#");
          System.out.println(" ------------------ "+attribute.getRef());
          System.out.println("split[0]: "+split[0]);
          System.out.println("split[1]: "+split[1]);
-         //wd.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[8]/a", id))).click();
+
          int i = wd.findElements(By.cssSelector(".z-listbox-body tr")).size();
-         //int i = wd.findElements(By.xpath("//div[@class='z-listbox-body'][1]//tr")).size();
+
          System.out.println("-------0--1-------- i: "+i);
-         wd.findElements(By.cssSelector(".z-window-modal input")).get(0).sendKeys(split[0] + Keys.ENTER);
+         //wd.findElements(By.cssSelector(".z-window-modal input")).get(0).sendKeys(split[0] + Keys.ENTER);
+         wd.findElements(By.cssSelector(".z-window-modal")).get(winModCount-1).findElements(By.cssSelector("input")).get(0).sendKeys(split[0] + Keys.ENTER);
          sleep(100);
          app.wdwait.until(ExpectedConditions.numberOfElementsToBeLessThan(By.cssSelector(".z-listbox-body tr"), i));
-          //                 By.xpath("//div[@class='z-listbox-body'][1]//tr"), i));
+
          System.out.println("-------0--2-------- i: "+wd.findElements(By.cssSelector(".z-listbox-body tr")).size());
          for (int j=0;j<i;j++) {
-            //if (wd.findElements(By.cssSelector(".z-listbox-body tr")).get(j).findElements(By.cssSelector("td")).get(0).getText().equals(split[0])) {
+
             System.out.println(wd.findElement(By.xpath(String.format("//div[@class='z-listbox-body'][1]//tr[%s]/td[1]", j+1))).getText());
-            //if (wd.findElement(By.xpath(String.format("//tr[./[@class='z-listbox-body'][0]][%s]/td[0]", j))).getText().equals(split[0])) {
+
             if (wd.findElement(By.xpath(String.format("//div[@class='z-listbox-body'][1]//tr[%s]/td[1]", j+1))).getText().equals(split[0])) {
-               //wd.findElements(By.cssSelector(".z-listbox-body tr")).get(j).click();
-               //wd.findElements(By.xpath("//div[@class='z-listbox-body'][1]//tr")).get(j).click();
+
                wd.findElement(By.xpath(String.format("//div[@class='z-listbox-body'][1]//tr[%s]/td[1]", j+1))).click();
                System.out.println("Нашли!!!");
                break;
@@ -120,43 +184,43 @@ public class EntityHelper extends HelperBase {
          sleep(100);
          app.wdwait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(".z-listbox-body tr"), 1));
          i = wd.findElements(By.cssSelector(".z-listbox-body tr")).size();
-        // i = wd.findElements(By.xpath("//div[@class='z-listbox-body'][2]//tr")).size();
+
          System.out.println("--------1--1------- i: "+i);
          wd.findElements(By.cssSelector(".z-window-modal input")).get(1).sendKeys(split[1] + Keys.ENTER);
          sleep(100);
          app.wdwait.until(ExpectedConditions.numberOfElementsToBeLessThan(By.cssSelector(".z-listbox-body tr"), i));
-                              // By.xpath("//div[@class='z-listbox-body'][2]//tr"), i));
+
          for (int j=0;j<i;j++) {
-            //if (wd.findElements(By.cssSelector(".z-listbox-body tr")).get(j).findElements(By.cssSelector("td")).get(0).getText().equals(split[0])) {
            WebElement el = wd.findElements(By.cssSelector(".z-listbox-body")).get(1);
             System.out.println(el.findElements(By.cssSelector("tr.z-listitem")).get(j).findElements(By.cssSelector("td")).get(0).getText());
-            // System.out.println(wd.findElement(By.xpath(String.format("//div[@class='z-listbox-body'][2]//tr[@class='z-listitem'][%s]/td[1]", j+1))).getText());
-            //if (wd.findElement(By.xpath(String.format("//div[@class='z-listbox-body'][2]//tr[@class='z-listitem'][%s]/td[1]", j+1))).getText().contains(split[1])) {
-            if (el.findElements(By.cssSelector("tr.z-listitem")).get(j).findElements(By.cssSelector("td")).get(0).getText().contains(split[1])) {
-               //wd.findElements(By.cssSelector(".z-listbox-body tr")).get(j).click();
-               //wd.findElements(By.xpath("//div[@class='z-listbox-body'][2]//tr")).get(j).click();
-               //wd.findElement(By.xpath(String.format("//div[@class='z-listbox-body'][2]//tr[%s]/td[1]", j+1))).click();
-               el.findElements(By.cssSelector("tr.z-listitem")).get(j).findElements(By.cssSelector("td")).get(0).click();
+              if (el.findElements(By.cssSelector("tr.z-listitem")).get(j).findElements(By.cssSelector("td")).get(0).getText().contains(split[1])) {
+                 el.findElements(By.cssSelector("tr.z-listitem")).get(j).findElements(By.cssSelector("td")).get(0).click();
                System.out.println("Нашли!!!");
                break;
             }
          }
          wd.findElements(By.cssSelector(".z-window-modal .z-button")).get(0).click();
+         app.wdwait.until(ExpectedConditions.stalenessOf(wd.findElement(By.cssSelector(".z-window-modal"))));
+         sleep(1000);
       }
    }
 
-   private void filloutEntityParams(EntityData entity) throws InterruptedException {
-      long now = System.currentTimeMillis();
-      newKey = entity.getKey() + String.valueOf(now);
+   private void filloutEntityParams(EntityData entity, boolean isKeySuffix) throws InterruptedException {
+      String suffix = "";
+      if (isKeySuffix) {
+         //long now = System.currentTimeMillis();
+         suffix = String.valueOf(System.currentTimeMillis());
+      }
+      newKey = entity.getKey() + suffix; // String.valueOf(now);
       wd.findElements(By.cssSelector(".z-row input.z-textbox")).get(0).sendKeys(newKey);
       if (!entity.isHi() == wd.findElements(By.cssSelector("tbody .z-checkbox")).get(0).getAttribute("className").contains("z-checkbox-on")) {
          wd.findElements(By.cssSelector("tbody .z-checkbox")).get(0).click();
       }
       WebElement el = wd.findElements(By.cssSelector(".z-row input.z-textbox")).get(1);
-      el.sendKeys(entity.getNameRu()+now);
+      el.sendKeys(entity.getNameRu()+suffix);
 
       el = wd.findElements(By.cssSelector(".z-row input.z-textbox")).get(2);
-             el.sendKeys(entity.getNameEn()+now);
+             el.sendKeys(entity.getNameEn()+suffix);
    }
 
    private void addEntity() {
@@ -167,11 +231,16 @@ public class EntityHelper extends HelperBase {
    }
 
    public void contextSearch(String searchString) throws InterruptedException {
-      int i = wd.findElements(By.cssSelector(".z-treechildren tr")).size();
+     // int i = wd.findElements(By.cssSelector(".z-treechildren tr")).size();
+      sleep(200);
+      if (isElementPresent(By.cssSelector(".panel-filter input"))&&(wd.findElement(By.cssSelector(".panel-filter input")).isEnabled())) {
+         sleep(200);
+      }
       wd.findElement(By.cssSelector(".panel-filter input")).click();
-      wd.findElement(By.cssSelector(".panel-filter input")).sendKeys(searchString);
+      wd.findElement(By.cssSelector(".panel-filter input")).sendKeys(searchString+Keys.ENTER);
       sleep(100);
-      app.wdwait.until(ExpectedConditions.numberOfElementsToBeLessThan(By.cssSelector(".z-treechildren tr"), i));
+      app.wdwait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".button-clear")));
+     // app.wdwait.until(ExpectedConditions.numberOfElementsToBeLessThan(By.cssSelector(".z-treechildren tr"), i));
    }
 
    public void openEntitiesTreeBranches() {
@@ -202,8 +271,17 @@ public class EntityHelper extends HelperBase {
       contextSearch(entityKey);
       openEntitiesTreeBranches();
       findAndOpenEntityInView(entityKey);
+      checkAndClearHierarchyFlag();
       deleteEntityStructure();
       //contextSearchClear();
+   }
+
+   private void checkAndClearHierarchyFlag() {
+     // WebElement el = wd.findElements(By.cssSelector(".z-checkbox")).get(0);
+      //if (isElementPresent(By.cssSelector(".z-checkbox-on"), el)) {
+         wd.findElements(By.cssSelector(".z-checkbox-on")).get(0).click();
+         save();
+      //}
    }
 
    private void deleteEntityStructure() {
@@ -230,12 +308,11 @@ public class EntityHelper extends HelperBase {
    }
 
    private void contextSearchClear() throws InterruptedException {
-      if (!wd.findElement(By.cssSelector(".panel-filter input")).getAttribute("value").equals("")) {
-         int i = wd.findElements(By.cssSelector(".z-treechildren tr")).size();
-         wd.findElement(By.cssSelector(".panel-filter input")).clear();
+      if (wd.findElement(By.cssSelector(".button-clear")).isDisplayed()) {
+         wd.findElement(By.cssSelector(".button-clear")).click();
          sleep(100);
-         app.wdwait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(".z-treechildren tr"), i));
       }
+      wd.findElements(By.cssSelector(".z-tree-close")).get(0).click();
    }
 
    public void openEntityInDataView(String newKey) throws InterruptedException {

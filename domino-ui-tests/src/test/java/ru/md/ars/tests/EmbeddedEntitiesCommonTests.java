@@ -7,13 +7,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import ru.md.ars.model.EntityData;
 import ru.md.ars.model.MenuData;
 
-public class EntitiesCommonTests extends TestBase{
+public class EmbeddedEntitiesCommonTests extends TestBase{
 
  /*  @BeforeTest()
    public void changeToRusLang() {
@@ -27,6 +31,21 @@ web.baseUrl = 192.128.0.20:8080/
 
 http://192.128.0.20:8080/#entity.edit_users/USER
    */
+ @DataProvider
+ public Iterator<Object[]> validMenuItemsFromJSON() throws IOException {
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/menuAdminItems.json")))) { //   app.fileDataForGroup()
+       String json = "";
+       String line = reader.readLine();
+       while (line != null) {
+          json += line;
+          line = reader.readLine();
+       }
+       Gson gson = new Gson();
+       //List<EntityData> entities = gson.fromJson(json, new TypeToken<List<EntityData>>() {}.getType()); // это сложный способ только для списков объектов
+       List<MenuData> menuItems = gson.fromJson(json, new TypeToken<List<MenuData>>() {}.getType()); // это сложный способ только для списков объектов
+       return menuItems.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+    }
+ }
 
    @DataProvider
    public Iterator<Object[]> validMenuAdminItemFromCSV() throws IOException {
@@ -48,7 +67,7 @@ http://192.128.0.20:8080/#entity.edit_users/USER
       }
    }
 
-   @Test (dataProvider = "validMenuAdminItemFromCSV")
+   @Test (dataProvider = "validMenuItemsFromJSON")
    public void commonTestEmbeddedEntity(MenuData menuItem) throws InterruptedException {
       System.out.println("Admin menu: "+menuItem.getNameRU()+" "+menuItem.getNameEN()+" "+menuItem.getUrl()+" order in menu: "+menuItem.getOrderInMenuGroup());
       app.go_to().adminMenuItem(menuItem.getInMenuGroup(), menuItem.getOrderInMenuGroup(), menuItem.getUrl());

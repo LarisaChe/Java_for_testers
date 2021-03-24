@@ -44,7 +44,7 @@ public class OpenAllPagesTests {
 
    @DataProvider
    public Iterator<Object[]> validMenuItemsFromJSON() throws IOException {
-      try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/menuAdminItems.json")))) { //   app.fileDataForGroup()
+      try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/menuItems.json")))) { //   app.fileDataForGroup()
          String json = "";
          String line = reader.readLine();
          while (line != null) {
@@ -52,14 +52,14 @@ public class OpenAllPagesTests {
             line = reader.readLine();
          }
          Gson gson = new Gson();
-         List<EntityData> entities = gson.fromJson(json, new TypeToken<List<EntityData>>() {}.getType()); // это сложный способ только для списков объектов
-         return entities.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+         List<MenuData> menuItems = gson.fromJson(json, new TypeToken<List<MenuData>>() {}.getType()); // это сложный способ только для списков объектов
+         return menuItems.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
       }
    }
 
    @Test  (dataProvider = "validMenuItemsFromJSON")  //
    public void testOpenAllEmbeddedPagesByMenu(MenuData menuItem) throws InterruptedException {
-      System.out.println("Opening by menu: "+menuItem.getNameRU()+" "+menuItem.getNameEN()+" "+menuItem.getUrl()+" order in menu: "+menuItem.getOrderInMenuGroup());
+      System.out.println("Opening by menu: "+menuItem.getNameRU()+" "+menuItem.getNameEN()+" "+menuItem.getUrl()+" order in menu: "+menuItem.getOrderInMenuGroup()+" "+menuItem.isTestable());
       if (menuItem.isTestable()) {
             if (menuItem.getInMenuGroup().equals(".z-icon-shield")) {
               app.go_to().adminMenuItem(menuItem.getInMenuGroup(), menuItem.getOrderInMenuGroup(), menuItem.getUrl());
@@ -69,12 +69,11 @@ public class OpenAllPagesTests {
                 }
       }
       else System.out.println("Pass!");
-
    }
 
-   @Test (dataProvider = "validMenuItemsFromCSV")
+   @Test (dataProvider = "validMenuItemsFromJSON")
    public void testOpenAllEmbeddedPagesByURL(MenuData menuItem) throws InterruptedException {
-      if (menuItem.getLevel()>0) {
+      if ((menuItem.getLevel()>0) && menuItem.isTestable()) {
          System.out.println("Opening by url: "+menuItem.getNameRU()+" "+menuItem.getNameEN()+" "+menuItem.getUrl());
          app.go_to().pageByUrl(menuItem.getUrl(), menuItem.getNameRU());  //, menuItem.getInMenuGroup()
       }

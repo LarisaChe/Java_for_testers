@@ -1,0 +1,65 @@
+[
+  {
+    "key": "DictjsonG2",
+    "nameRu": "NameRu json G 2",
+    "nameEn": "NameEn json G 2",
+    "hi": false,
+    "attributes": [
+            {
+        "key": "mustr",
+        "nameRu": "Мульти строка",
+        "nameEn": "Multy strEN",
+        "type": "Строка",
+        "filter": true,
+        "multilang": true
+      },
+      {
+        "key": "mk",
+        "nameRu": "Ссылка ключ",
+        "nameEn": "Mention key",
+        "type": "Ссылка (ключ)",
+        "ref": "REGION#NAME",
+        "filter": true,
+        "nullable": true
+      },
+      {
+        "key": "mi",
+        "nameRu": "Ссылка ID",
+        "nameEn": "Mention ID",
+        "type": "Ссылка (ID)",
+        "ref": "CITY#NAME",
+        "filter": true
+      },
+      {
+        "key": "ref",
+        "nameRu": "Связь",
+        "nameEn": "Refer",
+        "type": "Связь",
+        "ref": "COUNTRY#NAME",
+        "filter": true
+      },
+      {
+        "key": "num",
+        "nameRu": "Числовой атрибут",
+        "nameEn": "Number",
+        "type": "Число",
+        "filter": true
+      },
+      {
+        "key": "date",
+        "nameRu": "Дата",
+        "nameEn": "Date",
+        "type": "Дата",
+        "filter": true,
+        "nullable": true
+      },
+      {
+        "key": "text",
+        "nameRu": "Текст",
+        "nameEn": "Text",
+        "type": "Текст",
+        "filter": true
+      }
+    ]
+  }
+]

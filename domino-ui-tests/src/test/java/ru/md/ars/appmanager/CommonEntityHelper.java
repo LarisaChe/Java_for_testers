@@ -64,11 +64,11 @@ public class CommonEntityHelper extends HelperBase {
    private boolean addRow() throws InterruptedException {
       //click(By.cssSelector(".z-icon-plus"));
       if (wd.findElements(By.cssSelector(".z-icon-plus")).size()>0) {
-         System.out.println("Create new row for data");
-         wd.findElement(By.cssSelector(".z-icon-plus")).click();
-         sleep(100);
-         //.z-icon-check   button[title='Отклонить']
-         // clickButtonCancel();
+         //System.out.println("Create new row for data");
+         while (!isElementPresent(By.cssSelector(".z-icon-check"))) {
+            wd.findElement(By.cssSelector(".z-icon-plus")).click();
+            sleep(100);
+         }
          return true;
       }
       else {
@@ -88,23 +88,30 @@ public class CommonEntityHelper extends HelperBase {
       }
    }
 
-   public void fillWithSimpleData(boolean isHi) throws InterruptedException {
-      addRow();
-      app.wdwait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(".z-icon-times"),0));
-      if (isHi) fillFieldsInRow(".z-treerow td input", 1);
-      else fillFieldsInRow(".z-row td input", 2);
+   public void fillWithSimpleData(boolean isHi, int i) throws InterruptedException {
+      for (int j=1; j<=i; j++) {
+         addRow();
+         app.wdwait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(".z-icon-times"), 0));
+         if (isHi) fillFieldsInRow(".z-treerow td input", 1, String.valueOf(j));
+         else fillFieldsInRow(".z-row td input", 2, String.valueOf(j));
 
-      click(By.cssSelector(".z-icon-check"));
+         click(By.cssSelector(".z-icon-check"));
+         if (isElementPresent(By.cssSelector(".z-icon-check"))) {
+            app.wdwait.until(ExpectedConditions.stalenessOf(wd.findElement(By.cssSelector(".z-icon-check"))));
+         }
+      }
    }
 
-   private void fillFieldsInRow(String locate, int k) {
+   private void fillFieldsInRow(String locate, int k, String s) {
       int i = wd.findElements(By.cssSelector(locate)).size();
-      System.out.println("i= "+i);
+      //System.out.println("i= "+i);
       for (int j=k;j<i; j++) {
          WebElement el = wd.findElements(By.cssSelector(locate)).get(j);
-         if (!el.getAttribute("name").equals("file")) {
-            //wd.findElements(By.cssSelector(locate)).get(j).sendKeys("1");
-            el.sendKeys("1");
+         if ((!el.getAttribute("name").equals("file"))&&((!el.getAttribute("type").equals("checkbox")))) {
+            el.sendKeys(s);
+         }
+         if ((el.getAttribute("type").equals("checkbox"))&&((j % 2 == 0))) {
+            el.click();
          }
          /*WebElement el = wd.findElements(By.cssSelector(locate)).get(j);
          el.click();

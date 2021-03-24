@@ -1,12 +1,13 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
 <suite name="Suite1" verbose="1" >
-    <test name="entityCommonTest">
+    <test name="entityTests">
         <classes>
-            <class name="ru.md.ars.tests.EntitiesCommonTests" />
+            <class name="ru.md.ars.tests.EmbeddedEntitiesCommonTests" />
             <class name="ru.md.ars.tests.OpenAllPagesTests" />
             <class name="ru.md.ars.tests.EntityCreationTests" />
             <class name="ru.md.ars.tests.EntityDeletionTests" />
+            <class name="ru.md.ars.tests.ExportEntityTests" />
         </classes>
     </test>
 </suite>

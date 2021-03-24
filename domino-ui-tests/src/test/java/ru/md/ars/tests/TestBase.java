@@ -1,20 +1,14 @@
 package ru.md.ars.tests;
 
-import java.io.File;
-import java.math.BigInteger;
-import java.net.MalformedURLException;
-import java.rmi.RemoteException;
 import java.util.Arrays;
-import java.util.List;
 
+import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //import javax.xml.rpc.ServiceException;
 
 import org.openqa.selenium.remote.BrowserType;
-import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeMethod;
@@ -27,12 +21,14 @@ import java.lang.reflect.Method;
 //@Listeners (MyTestListener.class)
 public class TestBase {
    protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.FIREFOX)); // BrowserType.CHROME));
+        //= new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
  
-   Logger logger = LoggerFactory.getLogger(EntitiesCommonTests.class);
+   Logger logger = LoggerFactory.getLogger(EmbeddedEntitiesCommonTests.class);
 
    @BeforeSuite
    public void setUp() throws Exception {
       app.init();
+      //app.zoomOut();
       app.go_to().changeToRussianLanguage();
        //changeToRussianLanguage();
       //app.ftp().upload(new File("src/test/resources/config_inc.php"), "config/config_inc.php", "config/config_inc.php.bak");
